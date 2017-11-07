@@ -18,4 +18,4 @@ def status_cve(probe_id):
     if probe.vulnerability_found:
         return 'danger'
     else:
-        return 'danger'
+        return 'success'
