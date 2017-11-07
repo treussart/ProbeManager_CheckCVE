@@ -20,9 +20,9 @@
         Check updated date : Never
         {% endif %}
         <br>
-
+        {% load status_cve %}
         <div class="btn-group" role="group">
-          <button type="button" class="btn btn-outline-success" onclick="window.location.href='/{{ probe.type|lower }}/check/{{ probe.id }}'">Check CVE</button>
+          <button type="button" class="btn btn-outline-{{ probe.id|status_cve }}" onclick="window.location.href='/{{ probe.type|lower }}/check/{{ probe.id }}'">Check CVE</button>
         </div>
         <br>
         {% if messages %}

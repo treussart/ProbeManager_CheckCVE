@@ -6,7 +6,7 @@ from home.utils import send_notification
 import traceback
 
 
-logger = get_task_logger(__name__)
+logger = get_task_logger('checkcve')
 
 
 @task

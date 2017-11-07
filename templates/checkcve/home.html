@@ -12,8 +12,9 @@
     <div class="row">
         <div class="center-block">
             <div class="list-group">
+                {% load status_cve %}
                 {% for instance in instances.checkcve %}
-                <a class="list-group-item list-group-item-success list-group-item-action"
+                <a class="list-group-item list-group-item-{{ instance.id|status_cve }} list-group-item-action"
                    href="{% url 'checkcve:probe_index' instance.id %}">{{ instance }} - {{ instance.host }}
                 </a>
                 {% endfor %}

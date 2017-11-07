@@ -132,6 +132,7 @@ class Checkcve(Probe):
     """
     softwares = models.ManyToManyField(Software, blank=True)
     whitelist = models.ForeignKey(WhiteList)
+    vulnerability_found = models.BooleanField(default=False, editable=False)
 
     def __init__(self, *args, **kwargs):
         super(Probe, self).__init__(*args, **kwargs)
@@ -164,7 +165,8 @@ class Checkcve(Probe):
         self.rules_updated_date = timezone.now()
         self.save()
         if list_new_cve:
-            print("no CVE")
+            self.vulnerability_found = True
+            self.save()
             users = User.objects.all()
             try:
                 for user in users:
@@ -175,4 +177,6 @@ class Checkcve(Probe):
             send_notification('%s new CVE' % nbr, html.fromstring(list_new_cve).text_content())
             return list_new_cve
         else:
+            self.vulnerability_found = False
+            self.save()
             return "No CVE found !"
