@@ -1,0 +1,42 @@
+{% extends "home/base.html" %}
+
+{% block title %}{{ probe.type }}{% endblock %}
+
+{% block content %}
+
+<h2 style="padding-left:40px;">Instance {{ probe.type }} : {{ probe.name }}</h2>
+<div class="row">
+    <div class="col-md-6 mb-3" style="padding-left:50px;">
+        {% if probe.description != " " %}
+        Description:
+        <pre>{{ probe.description }}</pre>
+        {% endif %}
+        Os : {{ probe.server.os }} <br>
+        Host : {{ probe.server.host }}<br>
+        Created date : {{ probe.created_date }}<br>
+        {% if probe.rules_updated_date %}
+        Last Check date : {{ probe.rules_updated_date }}
+        {% else %}
+        Check updated date : Never
+        {% endif %}
+        <br>
+
+        <div class="btn-group" role="group">
+          <button type="button" class="btn btn-outline-success" onclick="window.location.href='/{{ probe.type|lower }}/check/{{ probe.id }}'">Check CVE</button>
+        </div>
+        <br>
+        {% if messages %}
+        <br>
+        <ul class="messages">
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissable">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>{{ message|safe }}</strong>
+            </div>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        <br>
+    </div>
+</div>
+{% endblock %}

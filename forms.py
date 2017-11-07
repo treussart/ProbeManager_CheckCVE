@@ -1,0 +1,8 @@
+from django.forms import ModelForm
+from checkcve.models import Checkcve
+
+
+class CheckCVEForm(ModelForm):
+    class Meta:
+        model = Checkcve
+        fields = ('name', 'description', 'scheduled_crontab', 'server', 'softwares', 'whitelist')

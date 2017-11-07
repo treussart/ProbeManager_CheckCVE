@@ -1,0 +1,82 @@
+[
+{
+    "model": "checkcve.software",
+    "pk": 1,
+    "fields": {
+        "name": "dovecot",
+        "os": 1,
+        "command": "echo $(sudo dovecot --version | cut -d \" \" -f 1 )",
+        "cpe": "dovecot:dovecot"
+    }
+},
+{
+    "model": "checkcve.software",
+    "pk": 2,
+    "fields": {
+        "name": "postfix",
+        "os": 1,
+        "command": "echo $(sudo postconf -d | grep mail_version | grep -Po \"(\\d+\\.)+\\d+\")",
+        "cpe": "postfix:postfix"
+    }
+},
+{
+    "model": "checkcve.software",
+    "pk": 3,
+    "fields": {
+        "name": "apache",
+        "os": 1,
+        "command": "echo $(sudo /usr/sbin/apache2 -v | grep -Po \"(\\d+\\.)+\\d+\" )",
+        "cpe": "apache:http_server"
+    }
+},
+{
+    "model": "checkcve.software",
+    "pk": 4,
+    "fields": {
+        "name": "bind",
+        "os": 1,
+        "command": "echo $(sudo named -v | grep -Po \"(\\d+\\.)+\\d+\")",
+        "cpe": "isc:bind"
+    }
+},
+{
+    "model": "checkcve.software",
+    "pk": 5,
+    "fields": {
+        "name": "mongodb",
+        "os": 1,
+        "command": "export LC_ALL=en_US.UTF-8; export LANG=en_US.UTF-8; export LC_ALL=en_US.UTF-8; export LANG=en_US.UTF-8;  echo $(sudo mongod --version | grep -Po \"(\\d+\\.)+\\d+\" -m 1 )",
+        "cpe": "mongodb:mongodb"
+    }
+},
+{
+    "model": "checkcve.software",
+    "pk": 6,
+    "fields": {
+        "name": "openssl",
+        "os": 1,
+        "command": "openssl version | awk '{print $2}'",
+        "cpe": "openssl:openssl"
+    }
+},
+{
+    "model": "checkcve.software",
+    "pk": 7,
+    "fields": {
+        "name": "openvpn",
+        "os": 1,
+        "command": "echo $(sudo openvpn --version | grep -Po \"(\\d+\\.)+\\d+\" -m 1 )",
+        "cpe": "openvpn:openvpn"
+    }
+},
+{
+    "model": "checkcve.software",
+    "pk": 8,
+    "fields": {
+        "name": "openssh",
+        "os": 1,
+        "command": "{ echo $( ssh -v localhost  2>&1 >/dev/null | head -n1 | cut -d \" \" -f 1 | cut -d '_' -f 2 | cut -d 'p' -f 1  ) ; } | tr \"\\n\" \":\" ;  echo $( ssh -v localhost  2>&1 >/dev/null | head -n1 | cut -d \" \" -f 1 | cut -d '_' -f 2 | grep -o \"[a-z][0-9]\")",
+        "cpe": "openbsd:openssh"
+    }
+}
+]

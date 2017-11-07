@@ -1,0 +1,25 @@
+<br/>
+<h2>
+{% load static %}
+    &nbsp;<img src="{% static 'checkcve/images/checkcve-logo.png' %}" alt="Suricata logo">
+</h2>
+<button type="button" class="btn btn-secondary" onclick="window.location.href='/admin/checkcve/checkcve/add/'">Add new instance
+</button>
+
+<br/><br/>
+{% if instances.checkcve %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="center-block">
+            <div class="list-group">
+                {% for instance in instances.checkcve %}
+                <a class="list-group-item list-group-item-success list-group-item-action"
+                   href="{% url 'checkcve:probe_index' instance.id %}">{{ instance }} - {{ instance.host }}
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+<br/>
