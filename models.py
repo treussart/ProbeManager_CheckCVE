@@ -146,7 +146,10 @@ class Checkcve(Probe):
         list_new_cve = ""
         nbr = 0
         for software in self.softwares.all():
-            cpe_list.append(convert_to_cpe(software.cpe, software.get_version(self)['message']))
+            soft = software.get_version(self)
+            logger.debug(" software get version : " + str(soft))
+            if 'message' in soft:
+                cpe_list.append(convert_to_cpe(software.cpe, soft['message']))
         for cpe in cpe_list:
             print(cpe)
             new = False

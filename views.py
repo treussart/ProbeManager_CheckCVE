@@ -5,6 +5,7 @@ import importlib
 from django.http import HttpResponseNotFound
 from django.contrib import messages
 import logging
+from checkcve.tasks import check_cve as task_cve
 
 
 logger = logging.getLogger(__name__)
@@ -22,8 +23,8 @@ def check_cve(request, id):
         return HttpResponseNotFound
     else:
         try:
-            response = probe.check_cve()
-            messages.add_message(request, messages.SUCCESS, response)
+            task_cve.delay(probe.name)
+            messages.add_message(request, messages.SUCCESS, "Check CVE launched with succeed <a href='/admin/home/job/'> View Job</a>")
         except Exception as e:
             messages.add_message(request, messages.ERROR, "Check CVE failed ! " + e.__str__())
     return render(request, probe.type.lower() + '/index.html', {'probe': probe})
