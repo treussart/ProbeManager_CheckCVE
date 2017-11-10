@@ -5,7 +5,7 @@
     "fields": {
         "name": "dovecot",
         "os": 1,
-        "command": "echo $(sudo dovecot --version | cut -d \" \" -f 1 )",
+        "command": "apt-cache policy dovecot-imapd | sed -n '2 p' | cut -f 4 -d ' ' | cut -d '-' -f 1",
         "cpe": "dovecot:dovecot"
     }
 },
@@ -15,7 +15,7 @@
     "fields": {
         "name": "postfix",
         "os": 1,
-        "command": "echo $(sudo postconf -d | grep mail_version | grep -Po \"(\\d+\\.)+\\d+\")",
+        "command": "apt-cache policy postfix | sed -n '2 p' | cut -f 4 -d ' ' | cut -d '-' -f 1",
         "cpe": "postfix:postfix"
     }
 },
@@ -25,7 +25,7 @@
     "fields": {
         "name": "apache",
         "os": 1,
-        "command": "echo $(sudo /usr/sbin/apache2 -v | grep -Po \"(\\d+\\.)+\\d+\" )",
+        "command": "apt-cache policy apache2 | sed -n '2 p' | cut -f 4 -d ' ' | cut -d '-' -f 1",
         "cpe": "apache:http_server"
     }
 },
@@ -35,7 +35,7 @@
     "fields": {
         "name": "bind",
         "os": 1,
-        "command": "echo $(sudo named -v | grep -Po \"(\\d+\\.)+\\d+\")",
+        "command": "apt-cache policy bind9 | sed -n '2 p' | cut -f 4 -d ' ' | cut -d '-' -f 1",
         "cpe": "isc:bind"
     }
 },
@@ -45,7 +45,7 @@
     "fields": {
         "name": "mongodb",
         "os": 1,
-        "command": "export LC_ALL=en_US.UTF-8; export LANG=en_US.UTF-8; export LC_ALL=en_US.UTF-8; export LANG=en_US.UTF-8;  echo $(sudo mongod --version | grep -Po \"(\\d+\\.)+\\d+\" -m 1 )",
+        "command": "export LC_ALL=en_US.UTF-8; export LANG=en_US.UTF-8; export LC_ALL=en_US.UTF-8; export LANG=en_US.UTF-8;  echo $(sudo mongod --version | grep -Po '(\\d+\\.)+\\d+' -m 1 )",
         "cpe": "mongodb:mongodb"
     }
 },
@@ -55,7 +55,7 @@
     "fields": {
         "name": "openssl",
         "os": 1,
-        "command": "openssl version | awk '{print $2}'",
+        "command": "apt-cache policy openssl | sed -n '2 p' | cut -f 4 -d ' ' |  cut -d '-' -f 1",
         "cpe": "openssl:openssl"
     }
 },
@@ -65,7 +65,7 @@
     "fields": {
         "name": "openvpn",
         "os": 1,
-        "command": "echo $(sudo openvpn --version | grep -Po \"(\\d+\\.)+\\d+\" -m 1 )",
+        "command": "apt-cache policy openvpn | sed -n '2 p' | cut -f 4 -d ' ' | cut -d '-' -f 1",
         "cpe": "openvpn:openvpn"
     }
 },
@@ -75,7 +75,7 @@
     "fields": {
         "name": "openssh",
         "os": 1,
-        "command": "{ echo $( ssh -v localhost  2>&1 >/dev/null | head -n1 | cut -d \" \" -f 1 | cut -d '_' -f 2 | cut -d 'p' -f 1  ) ; } | tr \"\\n\" \":\" ;  echo $( ssh -v localhost  2>&1 >/dev/null | head -n1 | cut -d \" \" -f 1 | cut -d '_' -f 2 | grep -o \"[a-z][0-9]\")",
+        "command": "apt-cache policy openssh-server | sed -n '2 p' | cut -f 4 -d ' ' |  cut -d '-' -f 1",
         "cpe": "openbsd:openssh"
     }
 }
