@@ -145,10 +145,10 @@ class Checkcve(Probe):
         nbr = 0
         for software in self.softwares.all():
             version = software.get_version(self)
-            logger.debug(" software get version : " + str(version))
+            logger.info(" software get version : " + str(version))
             cpe_list.append(convert_to_cpe(software.cpe, version))
         for cpe in cpe_list:
-            logger.debug("cpe: " + str(cpe))
+            logger.info("cpe: " + str(cpe))
             new = False
             list_new_cve_rows = ""
             cve = CVESearch()
