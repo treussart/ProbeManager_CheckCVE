@@ -2,8 +2,7 @@ from django.db import models
 from home.models import Probe, OsSupported
 from home.utils import send_notification
 import logging
-from checkcve.utils import convert_to_cpe, CVESearch
-from home.ansible_tasks import execute
+from checkcve.utils import convert_to_cpe, CVESearch, ssh_connection
 from django.contrib.auth.models import User
 from lxml import html
 from django.utils import timezone
@@ -120,10 +119,9 @@ class Software(models.Model):
 
     def get_version(self, probe):
         software_by_os = Software.objects.get(name=self.name, os=probe.server.os)
-        tasks = [
-            dict(action=dict(module='shell', args=software_by_os.command)),
-        ]
-        return execute(probe.server, tasks)
+        output = ssh_connection(probe, software_by_os.command)
+        logger.debug("output : " + str(output))
+        return output
 
 
 class Checkcve(Probe):
@@ -146,18 +144,16 @@ class Checkcve(Probe):
         list_new_cve = ""
         nbr = 0
         for software in self.softwares.all():
-            soft = software.get_version(self)
-            logger.debug(" software get version : " + str(soft))
-            if 'message' in soft:
-                cpe_list.append(convert_to_cpe(software.cpe, soft['message']))
+            version = software.get_version(self)
+            logger.debug(" software get version : " + str(version))
+            cpe_list.append(convert_to_cpe(software.cpe, version))
         for cpe in cpe_list:
-            print(cpe)
+            logger.debug("cpe: " + str(cpe))
             new = False
             list_new_cve_rows = ""
             cve = CVESearch()
             cves_json = cve.cvefor(cpe)
             for i, val in enumerate(cves_json):
-                print(cves_json[i]['id'])
                 if not self.whitelist.check_if_exists(cves_json[i]['id']):
                     new = True
                     nbr += 1

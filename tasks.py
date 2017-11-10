@@ -6,7 +6,7 @@ from home.utils import send_notification
 import traceback
 
 
-logger = get_task_logger('checkcve')
+logger = get_task_logger(__name__)
 
 
 @task
@@ -19,16 +19,16 @@ def check_cve(probe_name):
     probe = my_class.get_by_name(probe_name)
     if probe.scheduled_enabled:
         try:
-            message = probe.check_cve()
-            job.update_job(message, 'Completed')
-            logger.info("task - check_cve : " + str(probe_name) + " - " + str(message))
+            response = probe.check_cve()
+            job.update_job(response, 'Completed')
+            logger.info("task - check_cve : " + str(probe_name) + " - " + str(response))
         except Exception as e:
             logger.error(e.__str__())
             logger.error(traceback.print_exc())
             job.update_job(e.__str__(), 'Error')
             send_notification("Check CVE for " + str(probe.name), e.__str__())
             return {"message": "Error for probe " + str(probe.name) + " to check CVE", "exception": e.__str__()}
-        return message
+        return response
     else:
         job.update_job("Not enabled to check CVE", 'Error')
         send_notification("Probe " + str(probe.name), "Not enabled to check CVE")
