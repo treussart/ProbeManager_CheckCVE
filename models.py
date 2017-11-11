@@ -178,4 +178,4 @@ class Checkcve(Probe):
         else:
             self.vulnerability_found = False
             self.save()
-            return "No CVE found !"
+            return "No CVE found ! for : " + str(cpe_list)
