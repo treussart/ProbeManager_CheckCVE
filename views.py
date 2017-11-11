@@ -24,7 +24,7 @@ def check_cve(request, id):
     else:
         try:
             task_cve.delay(probe.name)
-            messages.add_message(request, messages.SUCCESS, "Check CVE launched with succeed <a href='/admin/home/job/'> View Job</a>")
+            messages.add_message(request, messages.SUCCESS, "Check CVE launched with succeed. View Job")
         except Exception as e:
             messages.add_message(request, messages.ERROR, "Check CVE failed ! " + e.__str__())
     return render(request, probe.type.lower() + '/index.html', {'probe': probe})
