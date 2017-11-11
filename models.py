@@ -170,7 +170,7 @@ class Checkcve(Probe):
             try:
                 for user in users:
                     if user.is_superuser:
-                        user.email_user('%s new CVE' % nbr, list_new_cve, from_email="cve@treussart.com")
+                        user.email_user('%s new CVE' % nbr, '', html_message=list_new_cve, from_email="cve@treussart.com")
             except ConnectionRefusedError:
                 pass
             send_notification('%s new CVE' % nbr, html.fromstring(list_new_cve).text_content())
