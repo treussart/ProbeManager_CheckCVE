@@ -51,4 +51,4 @@ def create_check_cve_task(probe):
 
 
 def ssh_connection(probe, command):
-    return subprocess.getoutput('ssh -p ' + str(probe.server.ansible_remote_port) + ' -i ' + settings.MEDIA_ROOT + "/" + probe.server.ansible_ssh_private_key_file.file.name + ' ' + probe.server.ansible_remote_user + '@' + probe.server.host + ' "' + command + '"')
+    return subprocess.getoutput('ssh -o StrictHostKeyChecking=no -p ' + str(probe.server.ansible_remote_port) + ' -i ' + settings.MEDIA_ROOT + "/" + probe.server.ansible_ssh_private_key_file.file.name + ' ' + probe.server.ansible_remote_user + '@' + probe.server.host + ' "' + command + '"')
