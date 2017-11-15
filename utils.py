@@ -2,8 +2,6 @@ import requests
 from urllib.parse import urljoin
 from django_celery_beat.models import PeriodicTask, CrontabSchedule
 import json
-import subprocess
-from django.conf import settings
 
 
 def convert_to_cpe(name, version):
@@ -48,7 +46,3 @@ def create_check_cve_task(probe):
                                     task='checkcve.tasks.check_cve',
                                     args=json.dumps([probe.name, ])
                                     )
-
-
-def ssh_connection(probe, command):
-    return subprocess.getoutput('ssh -o StrictHostKeyChecking=no -p ' + str(probe.server.ansible_remote_port) + ' -i ' + settings.MEDIA_ROOT + "/" + probe.server.ansible_ssh_private_key_file.file.name + ' ' + probe.server.ansible_remote_user + '@' + probe.server.host + ' "' + command + '"')

@@ -2,7 +2,8 @@ from django.db import models
 from home.models import Probe, OsSupported
 from home.utils import send_notification
 import logging
-from checkcve.utils import convert_to_cpe, CVESearch, ssh_connection
+from home.ssh import execute
+from checkcve.utils import convert_to_cpe, CVESearch
 from django.contrib.auth.models import User
 from lxml import html
 from django.utils import timezone
@@ -119,9 +120,14 @@ class Software(models.Model):
 
     def get_version(self, probe):
         software_by_os = Software.objects.get(name=self.name, os=probe.server.os)
-        output = ssh_connection(probe, software_by_os.command)
+        command = {'get_version': software_by_os.command}
+        output = dict()
+        try:
+            output = execute(probe, command)
+        except Exception as e:
+            logger.error(e)
         logger.debug("output : " + str(output))
-        return output
+        return output['get_version']
 
 
 class Checkcve(Probe):
