@@ -123,7 +123,7 @@ class Software(models.Model):
         command = {'get_version': software_by_os.command}
         output = dict()
         try:
-            output = execute(probe, command)
+            output = execute(probe.server, command)
         except Exception as e:
             logger.error(e)
         logger.debug("output : " + str(output))
