@@ -26,7 +26,7 @@ def check_cve(probe_name):
             logger.error(e.__str__())
             logger.error(traceback.print_exc())
             job.update_job(e.__str__(), 'Error')
-            send_notification("Check CVE for " + str(probe.name), e.__str__())
+            send_notification("Error during Check CVE for " + str(probe.name), e.__str__())
             return {"message": "Error for probe " + str(probe.name) + " to check CVE", "exception": e.__str__()}
         return response
     else:

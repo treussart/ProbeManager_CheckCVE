@@ -126,6 +126,7 @@ class Software(models.Model):
             output = execute(probe.server, command)
         except Exception as e:
             logger.error(e)
+            return e.__str__()
         logger.debug("output : " + str(output))
         return output['get_version']
 
