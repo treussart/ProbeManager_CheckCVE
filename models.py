@@ -121,13 +121,12 @@ class Software(models.Model):
     def get_version(self, probe):
         software_by_os = Software.objects.get(name=self.name, os=probe.server.os)
         command = {'get_version': software_by_os.command}
-        output = dict()
         try:
             output = execute(probe.server, command)
         except Exception as e:
             logger.error(e)
             return e.__str__()
-        logger.debug("output : " + str(output))
+        logger.info("output : " + str(output))
         return output['get_version']
 
 
