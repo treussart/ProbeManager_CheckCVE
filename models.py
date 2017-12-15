@@ -1,6 +1,6 @@
 from django.db import models
 from home.models import Probe, OsSupported
-from home.utils import send_notification
+from home.notifications import send_notification
 import logging
 from home.ssh import execute
 from checkcve.utils import convert_to_cpe, CVESearch

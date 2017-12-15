@@ -2,7 +2,7 @@ from celery import task
 from celery.utils.log import get_task_logger
 from home.models import Probe, Job
 import importlib
-from home.utils import send_notification
+from home.notifications import send_notification
 import traceback
 
 
