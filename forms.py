@@ -6,3 +6,9 @@ class CheckCVEForm(ModelForm):
     class Meta:
         model = Checkcve
         fields = ('name', 'description', 'scheduled_crontab', 'server', 'softwares', 'whitelist')
+
+
+class CheckCVEChangeForm(ModelForm):
+    class Meta:
+        model = Checkcve
+        fields = ('name', 'description', 'server', 'softwares', 'whitelist')

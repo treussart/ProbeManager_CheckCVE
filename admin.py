@@ -2,7 +2,7 @@ from django.contrib import admin
 from checkcve.models import Checkcve, Software, WhiteList, Cve
 import logging
 from django.contrib import messages
-from checkcve.forms import CheckCVEForm
+from checkcve.forms import CheckCVEForm, CheckCVEChangeForm
 from checkcve.utils import create_check_cve_task
 
 
@@ -33,6 +33,13 @@ class CheckCVEAdmin(admin.ModelAdmin):
         obj.scheduled_enabled = True
         create_check_cve_task(obj)
         super().save_model(request, obj, form, change)
+
+    """A ModelAdmin that uses a different form class when adding an object."""
+    def get_form(self, request, obj=None, **kwargs):
+        if obj is None:
+            return super(CheckCVEAdmin, self).get_form(request, obj, **kwargs)
+        else:
+            return CheckCVEChangeForm
 
 
 admin.site.register(Checkcve, CheckCVEAdmin)
