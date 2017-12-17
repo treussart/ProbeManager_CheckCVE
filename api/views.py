@@ -4,7 +4,7 @@ from checkcve.models import Cve, Checkcve, WhiteList, Software
 from rest_framework.mixins import ListModelMixin, RetrieveModelMixin
 
 
-class CheckcveViewSet(viewsets.ModelViewSet):
+class CheckcveViewSet(ListModelMixin, RetrieveModelMixin, viewsets.GenericViewSet):
     """
     API endpoint that allows groups to be viewed or edited.
     """
@@ -12,7 +12,7 @@ class CheckcveViewSet(viewsets.ModelViewSet):
     serializer_class = CheckcveSerializer
 
 
-class CveViewSet(ListModelMixin, RetrieveModelMixin, viewsets.GenericViewSet):
+class CveViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows groups to be viewed or edited.
     """
