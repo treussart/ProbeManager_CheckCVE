@@ -9,6 +9,7 @@ from lxml import html
 from django.utils import timezone
 import select2.fields
 from django.db.models import Q
+from django.contrib.postgres.fields import ArrayField
 
 
 logger = logging.getLogger(__name__)
@@ -137,6 +138,7 @@ class Checkcve(Probe):
     softwares = models.ManyToManyField(Software, blank=True)
     whitelist = models.ForeignKey(WhiteList)
     vulnerability_found = models.BooleanField(default=False, editable=False)
+    vulnerabilities = ArrayField(models.CharField(max_length=100, blank=True), editable=False, blank=True, null=True, default=list())
 
     def __init__(self, *args, **kwargs):
         super(Probe, self).__init__(*args, **kwargs)
@@ -147,6 +149,7 @@ class Checkcve(Probe):
 
     def check_cve(self):
         cpe_list = list()
+        vulnerabilities_list = list()
         list_new_cve = ""
         nbr = 0
         for software in self.softwares.all():
@@ -161,6 +164,7 @@ class Checkcve(Probe):
             cves_json = cve.cvefor(cpe)
             for i, val in enumerate(cves_json):
                 if not self.whitelist.check_if_exists(cves_json[i]['id']):
+                    vulnerabilities_list.append(cves_json[i]['id'])
                     new = True
                     nbr += 1
                     list_new_cve_rows = list_new_cve_rows + "<h4>" + cves_json[i]['id'] + " :</h4>" + cves_json[i][
@@ -171,6 +175,7 @@ class Checkcve(Probe):
         self.save()
         if list_new_cve:
             self.vulnerability_found = True
+            self.vulnerabilities = vulnerabilities_list
             self.save()
             users = User.objects.all()
             try:

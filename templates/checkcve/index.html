@@ -37,6 +37,14 @@
         </ul>
         {% endif %}
         <br>
+        {% if probe.vulnerabilities %}
+        CVE Found :<br>
+        {% for cve in probe.vulnerabilities %}
+        <div class="btn-group" role="group">
+          <button type="button" class="btn btn-outline-danger" onclick="window.open('https://www.cvedetails.com/cve/{{ cve }}/')">{{ cve }}</button>
+        </div>
+        {% endfor %}
+        {% endif %}
     </div>
 </div>
 {% endblock %}
