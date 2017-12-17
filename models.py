@@ -95,16 +95,22 @@ class Software(models.Model):
     """
     The software to check the common vulnerabilities and exposures.
     """
+    INSTALED_CHOICES = (
+        ('manual', 'manual'),
+        ('apt', 'apt'),
+        ('brew', 'brew'),
+    )
     name = models.CharField(max_length=100, null=False, blank=False)
     os = models.ForeignKey(OsSupported)
-    command = models.CharField(max_length=700, null=False, blank=False)
+    command = models.CharField(max_length=700, null=True, blank=True)
     cpe = models.CharField(max_length=100, null=False, blank=False)
+    instaled = models.CharField(max_length=255, choices=INSTALED_CHOICES, null=False, blank=False)
 
     class Meta:
-        unique_together = ('name', 'os',)
+        unique_together = ('name', 'os', 'instaled')
 
     def __str__(self):
-        return self.name + " - " + self.os.name
+        return self.name + " - " + self.os.name + " - " + self.instaled
 
     @classmethod
     def get_all(cls):
@@ -122,6 +128,10 @@ class Software(models.Model):
     def get_version(self, probe):
         software_by_os = Software.objects.get(name=self.name, os=probe.server.os)
         command = {'get_version': software_by_os.command}
+        if self.instaled == 'apt':
+            command = {'get_version': "apt-cache policy " + str(self.name) + " | sed -n '2 p' | grep -Po '\d{1,2}\.\d{1,2}\.{0,1}\d{0,2}' | sed -n '1 p'"}
+        elif self.instaled == 'brew':
+            command = {'get_version': "brew list " + str(self.name) + " --versions | cut -d ' ' -f 2"}
         try:
             output = execute(probe.server, command)
         except Exception as e:

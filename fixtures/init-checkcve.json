@@ -3,10 +3,11 @@
     "model": "checkcve.software",
     "pk": 1,
     "fields": {
-        "name": "dovecot",
+        "name": "dovecot-imapd",
         "os": 1,
-        "command": "apt-cache policy dovecot-imapd | sed -n '2 p' | grep -Po '\\d{1,2}\\.\\d{1,2}\\.{0,1}\\d{0,2}' | sed -n '1 p'",
-        "cpe": "dovecot:dovecot"
+        "command": "",
+        "cpe": "dovecot:dovecot",
+        "instaled": "apt"
     }
 },
 {
@@ -15,28 +16,31 @@
     "fields": {
         "name": "postfix",
         "os": 1,
-        "command": "apt-cache policy postfix | sed -n '2 p' | grep -Po '\\d{1,2}\\.\\d{1,2}\\.{0,1}\\d{0,2}' | sed -n '1 p'",
-        "cpe": "postfix:postfix"
+        "command": "",
+        "cpe": "postfix:postfix",
+        "instaled": "apt"
     }
 },
 {
     "model": "checkcve.software",
     "pk": 3,
     "fields": {
-        "name": "apache",
+        "name": "apache2",
         "os": 1,
-        "command": "apt-cache policy apache2 | sed -n '2 p' | grep -Po '\\d{1,2}\\.\\d{1,2}\\.{0,1}\\d{0,2}' | sed -n '1 p'",
-        "cpe": "apache:http_server"
+        "command": "",
+        "cpe": "apache:http_server",
+        "instaled": "apt"
     }
 },
 {
     "model": "checkcve.software",
     "pk": 4,
     "fields": {
-        "name": "bind",
+        "name": "bind9",
         "os": 1,
-        "command": "apt-cache policy bind9 | sed -n '2 p' | grep -Po '\\d{1,2}\\.\\d{1,2}\\.{0,1}\\d{0,2}' | sed -n '1 p'",
-        "cpe": "isc:bind"
+        "command": "",
+        "cpe": "isc:bind",
+        "instaled": "apt"
     }
 },
 {
@@ -46,7 +50,8 @@
         "name": "mongodb",
         "os": 1,
         "command": "export LC_ALL=en_US.UTF-8; export LANG=en_US.UTF-8; export LC_ALL=en_US.UTF-8; export LANG=en_US.UTF-8;  echo $(sudo mongod --version | grep -Po '(\\d+\\.)+\\d+' -m 1 )",
-        "cpe": "mongodb:mongodb"
+        "cpe": "mongodb:mongodb",
+        "instaled": "manual"
     }
 },
 {
@@ -55,8 +60,9 @@
     "fields": {
         "name": "openssl",
         "os": 1,
-        "command": "apt-cache policy openssl | sed -n '2 p' | grep -Po '\\d{1,2}\\.\\d{1,2}\\.{0,1}\\d{0,2}' | sed -n '1 p'",
-        "cpe": "openssl:openssl"
+        "command": "",
+        "cpe": "openssl:openssl",
+        "instaled": "apt"
     }
 },
 {
@@ -65,18 +71,20 @@
     "fields": {
         "name": "openvpn",
         "os": 1,
-        "command": "apt-cache policy openvpn | sed -n '2 p' | grep -Po '\\d{1,2}\\.\\d{1,2}\\.{0,1}\\d{0,2}' | sed -n '1 p'",
-        "cpe": "openvpn:openvpn"
+        "command": "",
+        "cpe": "openvpn:openvpn",
+        "instaled": "apt"
     }
 },
 {
     "model": "checkcve.software",
     "pk": 8,
     "fields": {
-        "name": "openssh",
+        "name": "openssh-server",
         "os": 1,
-        "command": "apt-cache policy openssh-server | sed -n '2 p' | grep -Po '\\d{1,2}\\.\\d{1,2}\\.{0,1}\\d{0,2}' | sed -n '1 p'",
-        "cpe": "openbsd:openssh"
+        "command": "",
+        "cpe": "openbsd:openssh",
+        "instaled": "apt"
     }
 }
 ]
