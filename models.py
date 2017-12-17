@@ -4,8 +4,6 @@ from home.notifications import send_notification
 import logging
 from home.ssh import execute
 from checkcve.utils import convert_to_cpe, CVESearch
-from django.contrib.auth.models import User
-from lxml import html
 from django.utils import timezone
 import select2.fields
 from django.db.models import Q
@@ -187,14 +185,7 @@ class Checkcve(Probe):
             self.vulnerability_found = True
             self.vulnerabilities = vulnerabilities_list
             self.save()
-            users = User.objects.all()
-            try:
-                for user in users:
-                    if user.is_superuser:
-                        user.email_user('%s new CVE' % nbr, '', html_message=list_new_cve, from_email="cve@treussart.com")
-            except ConnectionRefusedError:
-                pass
-            send_notification('%s new CVE' % nbr, html.fromstring(list_new_cve).text_content())
+            send_notification('%s new CVE' % nbr, list_new_cve, html=True)
             return list_new_cve
         else:
             self.vulnerability_found = False
