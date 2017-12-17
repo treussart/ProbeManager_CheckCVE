@@ -103,7 +103,7 @@ class Software(models.Model):
         unique_together = ('name', 'os',)
 
     def __str__(self):
-        return self.name
+        return self.name + " - " + self.os.name
 
     @classmethod
     def get_all(cls):
