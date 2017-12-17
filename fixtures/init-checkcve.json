@@ -5,9 +5,8 @@
     "fields": {
         "name": "dovecot-imapd",
         "os": 1,
-        "command": "",
         "cpe": "dovecot:dovecot",
-        "instaled": "apt"
+        "instaled_by": "apt"
     }
 },
 {
@@ -16,9 +15,8 @@
     "fields": {
         "name": "postfix",
         "os": 1,
-        "command": "",
         "cpe": "postfix:postfix",
-        "instaled": "apt"
+        "instaled_by": "apt"
     }
 },
 {
@@ -27,9 +25,8 @@
     "fields": {
         "name": "apache2",
         "os": 1,
-        "command": "",
         "cpe": "apache:http_server",
-        "instaled": "apt"
+        "instaled_by": "apt"
     }
 },
 {
@@ -38,9 +35,8 @@
     "fields": {
         "name": "bind9",
         "os": 1,
-        "command": "",
         "cpe": "isc:bind",
-        "instaled": "apt"
+        "instaled_by": "apt"
     }
 },
 {
@@ -51,7 +47,7 @@
         "os": 1,
         "command": "export LC_ALL=en_US.UTF-8; export LANG=en_US.UTF-8; export LC_ALL=en_US.UTF-8; export LANG=en_US.UTF-8;  echo $(sudo mongod --version | grep -Po '(\\d+\\.)+\\d+' -m 1 )",
         "cpe": "mongodb:mongodb",
-        "instaled": "manual"
+        "instaled_by": "manual"
     }
 },
 {
@@ -60,9 +56,8 @@
     "fields": {
         "name": "openssl",
         "os": 1,
-        "command": "",
         "cpe": "openssl:openssl",
-        "instaled": "apt"
+        "instaled_by": "apt"
     }
 },
 {
@@ -71,9 +66,8 @@
     "fields": {
         "name": "openvpn",
         "os": 1,
-        "command": "",
         "cpe": "openvpn:openvpn",
-        "instaled": "apt"
+        "instaled_by": "apt"
     }
 },
 {
@@ -82,9 +76,8 @@
     "fields": {
         "name": "openssh-server",
         "os": 1,
-        "command": "",
         "cpe": "openbsd:openssh",
-        "instaled": "apt"
+        "instaled_by": "apt"
     }
 }
 ]
