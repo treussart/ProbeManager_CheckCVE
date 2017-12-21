@@ -30,7 +30,7 @@ class CheckCVEAdmin(admin.ModelAdmin):
     actions = [check_cve]
 
     def save_model(self, request, obj, form, change):
-        obj.scheduled_enabled = True
+        obj.scheduled_rules_deployment_enabled = True
         create_check_cve_task(obj)
         super().save_model(request, obj, form, change)
 

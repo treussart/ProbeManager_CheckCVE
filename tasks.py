@@ -17,7 +17,7 @@ def check_cve(probe_name):
         return {"message": "Error - probe is None - param id not set : " + str(probe_name)}
     my_class = getattr(importlib.import_module(probe.type.lower() + ".models"), probe.type)
     probe = my_class.get_by_name(probe_name)
-    if probe.scheduled_enabled:
+    if probe.scheduled_rules_deployment_enabled:
         try:
             response = probe.check_cve()
             job.update_job(response, 'Completed')
