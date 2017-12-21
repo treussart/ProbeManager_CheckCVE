@@ -5,7 +5,7 @@ from checkcve.models import Checkcve
 class CheckCVEForm(ModelForm):
     class Meta:
         model = Checkcve
-        fields = ('name', 'description', 'scheduled_crontab', 'server', 'softwares', 'whitelist')
+        fields = ('name', 'description', 'scheduled_check_crontab', 'server', 'softwares', 'whitelist')
 
 
 class CheckCVEChangeForm(ModelForm):

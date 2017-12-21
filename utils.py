@@ -36,12 +36,12 @@ class CVESearch():
 
 
 def create_check_cve_task(probe):
-    if not probe.scheduled_crontab:
+    if not probe.scheduled_check_crontab:
         probe.scheduled_crontab = CrontabSchedule.objects.create(minute="0", hour="17", day_of_week="0")
     try:
         PeriodicTask.objects.get(name=probe.name + "_check_cve")
     except PeriodicTask.DoesNotExist:
-        PeriodicTask.objects.create(crontab=probe.scheduled_crontab,
+        PeriodicTask.objects.create(crontab=probe.scheduled_check_crontab,
                                     name=probe.name + "_check_cve",
                                     task='checkcve.tasks.check_cve',
                                     args=json.dumps([probe.name, ])
