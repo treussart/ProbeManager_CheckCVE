@@ -8,6 +8,7 @@ from django.utils import timezone
 import select2.fields
 from django.db.models import Q
 from django.contrib.postgres.fields import ArrayField
+from django.conf import settings
 
 
 logger = logging.getLogger(__name__)
@@ -175,8 +176,11 @@ class Checkcve(Probe):
                     vulnerabilities_list.append(cves_json[i]['id'])
                     new = True
                     nbr += 1
-                    list_new_cve_rows = list_new_cve_rows + "<h4>" + cves_json[i]['id'] + " :</h4>" + cves_json[i][
-                        'summary'] + "<br/>"
+                    if self.server.os.name is 'debian':
+                        title = "<h4><a href='https://security-tracker.debian.org/tracker/" + cves_json[i]['id'] + "'></a>" + cves_json[i]['id'] + " :</h4>"
+                    else:
+                        title = "<h4><a href='https://www.cvedetails.com/cve/" + cves_json[i]['id'] + "'></a>" + cves_json[i]['id'] + " :</h4>"
+                    list_new_cve_rows = list_new_cve_rows + title + cves_json[i]['summary'] + "<br/>"
             if new:
                 list_new_cve += "<h2>" + cpe + "</h2><br/>" + list_new_cve_rows
         self.rules_updated_date = timezone.now()
@@ -185,6 +189,9 @@ class Checkcve(Probe):
             self.vulnerability_found = True
             self.vulnerabilities = vulnerabilities_list
             self.save()
+            if settings.HOST:
+                link = "<br/><a href='https://" + settings.HOST + "'>Edit in ProbeManager</a>"
+                list_new_cve = list_new_cve + link
             send_notification('%s new CVE' % nbr, list_new_cve, html=True)
             return list_new_cve
         else:
