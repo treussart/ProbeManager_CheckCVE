@@ -41,7 +41,7 @@
         CVE Found :<br>
         {% for cve in probe.vulnerabilities %}
         <div class="btn-group" role="group">
-        {% if probe.server.os == 'debian' %}
+        {% if probe.server.os.name == 'debian' %}
             <button type="button" class="btn btn-outline-danger" onclick="window.open('https://security-tracker.debian.org/tracker/{{ cve }}/')">{{ cve }}</button>
         {% else %}
             <button type="button" class="btn btn-outline-danger" onclick="window.open('https://www.cvedetails.com/cve/{{ cve }}/')">{{ cve }}</button>
