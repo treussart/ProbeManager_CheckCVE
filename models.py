@@ -176,10 +176,10 @@ class Checkcve(Probe):
                     vulnerabilities_list.append(cves_json[i]['id'])
                     new = True
                     nbr += 1
-                    if self.server.os.name is 'debian':
-                        title = "<h4><a href='https://security-tracker.debian.org/tracker/" + cves_json[i]['id'] + "'></a>" + cves_json[i]['id'] + " :</h4>"
+                    if self.server.os.name == 'debian':
+                        title = "<h4><a href='https://security-tracker.debian.org/tracker/" + cves_json[i]['id'] + "'>" + cves_json[i]['id'] + " :</a></h4>"
                     else:
-                        title = "<h4><a href='https://www.cvedetails.com/cve/" + cves_json[i]['id'] + "'></a>" + cves_json[i]['id'] + " :</h4>"
+                        title = "<h4><a href='https://www.cvedetails.com/cve/" + cves_json[i]['id'] + "'>" + cves_json[i]['id'] + " :</a></h4>"
                     list_new_cve_rows = list_new_cve_rows + title + cves_json[i]['summary'] + "<br/>"
             if new:
                 list_new_cve += "<h2>" + cpe + "</h2><br/>" + list_new_cve_rows
