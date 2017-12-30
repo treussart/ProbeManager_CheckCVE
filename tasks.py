@@ -3,7 +3,6 @@ from celery.utils.log import get_task_logger
 from home.models import Probe, Job
 import importlib
 from home.notifications import send_notification
-import traceback
 
 
 logger = get_task_logger(__name__)
@@ -23,7 +22,6 @@ def check_cve(probe_name):
         logger.info("task - check_cve : " + str(probe_name) + " - " + str(response))
     except Exception as e:
         logger.error(e.__str__())
-        logger.error(traceback.print_exc())
         job.update_job(e.__str__(), 'Error')
         send_notification("Error during Check CVE for " + str(probe.name), e.__str__())
         return {"message": "Error for probe " + str(probe.name) + " to check CVE", "exception": e.__str__()}
