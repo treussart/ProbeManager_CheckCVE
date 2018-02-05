@@ -32,15 +32,15 @@ Models
 ======
 
 .. automodule:: checkcve.models
-   :members:
+:members:
 
 Views
 =====
 
 .. automodule:: checkcve.views
-    :members:
-    :undoc-members:
-    :special-members:
-    :inherited-members:
-    :show-inheritance:
+:members:
+        :undoc-members:
+        :special-members:
+        :inherited-members:
+        :show-inheritance:
 

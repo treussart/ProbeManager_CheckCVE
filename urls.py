@@ -1,7 +1,7 @@
 from django.conf.urls import url
-from home.views import probe_index
-from checkcve.views import check_cve
 
+from checkcve.views import check_cve
+from home.views import probe_index
 
 app_name = 'checkcve'
 

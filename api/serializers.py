@@ -1,5 +1,6 @@
-from checkcve.models import Checkcve, WhiteList, Software, Cve
 from rest_framework import serializers
+
+from checkcve.models import Checkcve, WhiteList, Software, Cve
 
 
 class CheckcveSerializer(serializers.ModelSerializer):

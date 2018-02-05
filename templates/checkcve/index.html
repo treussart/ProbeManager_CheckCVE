@@ -22,7 +22,9 @@
         <br><br>
         {% load status_cve %}
         <div class="btn-group" role="group">
-            <button type="button" class="btn btn-outline-{{ probe.id|status_cve }}" onclick="window.location.href='/{{ probe.type|lower }}/check/{{ probe.id }}'">Check CVE</button>
+            <button type="button" class="btn btn-outline-{{ probe.id|status_cve }}"
+                    onclick="window.location.href='/{{ probe.type|lower }}/check/{{ probe.id }}'">Check CVE
+            </button>
         </div>
         <br>
         {% if messages %}
@@ -41,11 +43,15 @@
         CVE Found :<br>
         {% for cve in probe.vulnerabilities %}
         <div class="btn-group" role="group">
-        {% if probe.server.os.name == 'debian' %}
-            <button type="button" class="btn btn-outline-danger" onclick="window.open('https://security-tracker.debian.org/tracker/{{ cve }}/')">{{ cve }}</button>
-        {% else %}
-            <button type="button" class="btn btn-outline-danger" onclick="window.open('https://www.cvedetails.com/cve/{{ cve }}/')">{{ cve }}</button>
-        {% endif %}
+            {% if probe.server.os.name == 'debian' %}
+            <button type="button" class="btn btn-outline-danger"
+                    onclick="window.open('https://security-tracker.debian.org/tracker/{{ cve }}/')">{{ cve }}
+            </button>
+            {% else %}
+            <button type="button" class="btn btn-outline-danger"
+                    onclick="window.open('https://www.cvedetails.com/cve/{{ cve }}/')">{{ cve }}
+            </button>
+            {% endif %}
         </div>
         {% endfor %}
         {% endif %}

@@ -1,83 +1,83 @@
 [
-{
+  {
     "model": "checkcve.software",
     "pk": 1,
     "fields": {
-        "name": "dovecot-imapd",
-        "os": 1,
-        "cpe": "dovecot:dovecot",
-        "instaled_by": "apt"
+      "name": "dovecot-imapd",
+      "os": 1,
+      "cpe": "dovecot:dovecot",
+      "instaled_by": "apt"
     }
-},
-{
+  },
+  {
     "model": "checkcve.software",
     "pk": 2,
     "fields": {
-        "name": "postfix",
-        "os": 1,
-        "cpe": "postfix:postfix",
-        "instaled_by": "apt"
+      "name": "postfix",
+      "os": 1,
+      "cpe": "postfix:postfix",
+      "instaled_by": "apt"
     }
-},
-{
+  },
+  {
     "model": "checkcve.software",
     "pk": 3,
     "fields": {
-        "name": "apache2",
-        "os": 1,
-        "cpe": "apache:http_server",
-        "instaled_by": "apt"
+      "name": "apache2",
+      "os": 1,
+      "cpe": "apache:http_server",
+      "instaled_by": "apt"
     }
-},
-{
+  },
+  {
     "model": "checkcve.software",
     "pk": 4,
     "fields": {
-        "name": "bind9",
-        "os": 1,
-        "cpe": "isc:bind",
-        "instaled_by": "apt"
+      "name": "bind9",
+      "os": 1,
+      "cpe": "isc:bind",
+      "instaled_by": "apt"
     }
-},
-{
+  },
+  {
     "model": "checkcve.software",
     "pk": 5,
     "fields": {
-        "name": "mongodb",
-        "os": 1,
-        "command": "export LC_ALL=en_US.UTF-8; export LANG=en_US.UTF-8; export LC_ALL=en_US.UTF-8; export LANG=en_US.UTF-8;  echo $(sudo mongod --version | grep -Po '(\\d+\\.)+\\d+' -m 1 )",
-        "cpe": "mongodb:mongodb",
-        "instaled_by": "manual"
+      "name": "mongodb",
+      "os": 1,
+      "command": "export LC_ALL=en_US.UTF-8; export LANG=en_US.UTF-8; export LC_ALL=en_US.UTF-8; export LANG=en_US.UTF-8;  echo $(sudo mongod --version | grep -Po '(\\d+\\.)+\\d+' -m 1 )",
+      "cpe": "mongodb:mongodb",
+      "instaled_by": "manual"
     }
-},
-{
+  },
+  {
     "model": "checkcve.software",
     "pk": 6,
     "fields": {
-        "name": "openssl",
-        "os": 1,
-        "cpe": "openssl:openssl",
-        "instaled_by": "apt"
+      "name": "openssl",
+      "os": 1,
+      "cpe": "openssl:openssl",
+      "instaled_by": "apt"
     }
-},
-{
+  },
+  {
     "model": "checkcve.software",
     "pk": 7,
     "fields": {
-        "name": "openvpn",
-        "os": 1,
-        "cpe": "openvpn:openvpn",
-        "instaled_by": "apt"
+      "name": "openvpn",
+      "os": 1,
+      "cpe": "openvpn:openvpn",
+      "instaled_by": "apt"
     }
-},
-{
+  },
+  {
     "model": "checkcve.software",
     "pk": 8,
     "fields": {
-        "name": "openssh-server",
-        "os": 1,
-        "cpe": "openbsd:openssh",
-        "instaled_by": "apt"
+      "name": "openssh-server",
+      "os": 1,
+      "cpe": "openbsd:openssh",
+      "instaled_by": "apt"
     }
-}
+  }
 ]

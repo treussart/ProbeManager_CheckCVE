@@ -1,10 +1,11 @@
-from django.contrib import admin
-from checkcve.models import Checkcve, Software, WhiteList, Cve
 import logging
-from django.contrib import messages
-from checkcve.forms import CheckCVEForm, CheckCVEChangeForm
-from checkcve.utils import create_check_cve_task
 
+from django.contrib import admin
+from django.contrib import messages
+
+from checkcve.forms import CheckCVEForm, CheckCVEChangeForm
+from checkcve.models import Checkcve, Software, WhiteList, Cve
+from checkcve.utils import create_check_cve_task
 
 logger = logging.getLogger(__name__)
 
@@ -21,7 +22,7 @@ class CheckCVEAdmin(admin.ModelAdmin):
                 print(response)
             except Exception as e:
                 test = False
-                errors.append(e.__str__())
+                errors.append(str(e))
         if test:
             messages.add_message(request, messages.SUCCESS, "Check CVE OK")
         else:
@@ -34,6 +35,7 @@ class CheckCVEAdmin(admin.ModelAdmin):
         super().save_model(request, obj, form, change)
 
     """A ModelAdmin that uses a different form class when adding an object."""
+
     def get_form(self, request, obj=None, **kwargs):
         if obj is None:
             return super(CheckCVEAdmin, self).get_form(request, obj, **kwargs)

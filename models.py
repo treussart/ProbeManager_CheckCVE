@@ -1,15 +1,16 @@
+import logging
+
+import select2.fields
+from django.conf import settings
+from django.contrib.postgres.fields import ArrayField
 from django.db import models
+from django.db.models import Q
+from django.utils import timezone
+
+from checkcve.utils import convert_to_cpe, CVESearch
 from home.models import Probe, OsSupported
 from home.notifications import send_notification
-import logging
 from home.ssh import execute
-from checkcve.utils import convert_to_cpe, CVESearch
-from django.utils import timezone
-import select2.fields
-from django.db.models import Q
-from django.contrib.postgres.fields import ArrayField
-from django.conf import settings
-
 
 logger = logging.getLogger(__name__)
 
@@ -100,7 +101,7 @@ class Software(models.Model):
         ('brew', 'brew'),
     )
     name = models.CharField(max_length=100, null=False, blank=False)
-    os = models.ForeignKey(OsSupported)
+    os = models.ForeignKey(OsSupported, on_delete=models.CASCADE)
     command = models.CharField(max_length=700, null=True, blank=True)
     cpe = models.CharField(max_length=100, null=False, blank=False)
     instaled_by = models.CharField(max_length=255, choices=INSTALED_CHOICES, null=False, blank=False)
@@ -128,14 +129,15 @@ class Software(models.Model):
         software_by_os = Software.objects.get(name=self.name, os=probe.server.os)
         command = {'get_version': software_by_os.command}
         if self.instaled_by == 'apt':
-            command = {'get_version': "apt-cache policy " + str(self.name) + " | sed -n '2 p' | grep -Po '\d{1,2}\.\d{1,2}\.{0,1}\d{0,2}' | sed -n '1 p'"}
+            command = {'get_version': "apt-cache policy " + str(
+                self.name) + " | sed -n '2 p' | grep -Po '\d{1,2}\.\d{1,2}\.{0,1}\d{0,2}' | sed -n '1 p'"}
         elif self.instaled_by == 'brew':
             command = {'get_version': "brew list " + str(self.name) + " --versions | cut -d ' ' -f 2"}
         try:
             output = execute(probe.server, command)
         except Exception as e:
             logger.error(e)
-            return e.__str__()
+            return str(e)
         logger.info("output : " + str(output))
         return output['get_version']
 
@@ -145,9 +147,10 @@ class Checkcve(Probe):
     The software to check the common vulnerabilities and exposures.
     """
     softwares = models.ManyToManyField(Software, blank=True)
-    whitelist = models.ForeignKey(WhiteList)
+    whitelist = models.ForeignKey(WhiteList, on_delete=models.CASCADE)
     vulnerability_found = models.BooleanField(default=False, editable=False)
-    vulnerabilities = ArrayField(models.CharField(max_length=100, blank=True), editable=False, blank=True, null=True, default=list())
+    vulnerabilities = ArrayField(models.CharField(max_length=100, blank=True), editable=False, blank=True, null=True,
+                                 default=list())
 
     def __init__(self, *args, **kwargs):
         super(Probe, self).__init__(*args, **kwargs)
@@ -177,9 +180,11 @@ class Checkcve(Probe):
                     new = True
                     nbr += 1
                     if self.server.os.name == 'debian':
-                        title = "<h4><a href='https://security-tracker.debian.org/tracker/" + cves_json[i]['id'] + "'>" + cves_json[i]['id'] + " :</a></h4>"
+                        title = "<h4><a href='https://security-tracker.debian.org/tracker/" + cves_json[i][
+                            'id'] + "'>" + cves_json[i]['id'] + " :</a></h4>"
                     else:
-                        title = "<h4><a href='https://www.cvedetails.com/cve/" + cves_json[i]['id'] + "'>" + cves_json[i]['id'] + " :</a></h4>"
+                        title = "<h4><a href='https://www.cvedetails.com/cve/" + cves_json[i]['id'] + "'>" + \
+                                cves_json[i]['id'] + " :</a></h4>"
                     infos = "<b>Infos server :</b> " + str(self.server) + "<br/><br/>"
                     list_new_cve_rows = list_new_cve_rows + title + infos + cves_json[i]['summary'] + "<br/>"
             if new:

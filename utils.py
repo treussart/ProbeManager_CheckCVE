@@ -1,7 +1,8 @@
-import requests
-from urllib.parse import urljoin
-from django_celery_beat.models import PeriodicTask, CrontabSchedule
 import json
+from urllib.parse import urljoin
+
+import requests
+from django_celery_beat.models import PeriodicTask, CrontabSchedule
 
 
 def convert_to_cpe(name, version):

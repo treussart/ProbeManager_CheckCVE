@@ -1,7 +1,8 @@
 from rest_framework import viewsets
+from rest_framework.mixins import ListModelMixin, RetrieveModelMixin
+
 from checkcve.api.serializers import CheckcveSerializer, CveSerializer, WhiteListSerializer, SoftwareSerializer
 from checkcve.models import Cve, Checkcve, WhiteList, Software
-from rest_framework.mixins import ListModelMixin, RetrieveModelMixin
 
 
 class CheckcveViewSet(ListModelMixin, RetrieveModelMixin, viewsets.GenericViewSet):
