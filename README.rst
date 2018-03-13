@@ -23,24 +23,3 @@ TODO
 ====
 
  * increase tests
-
-
-Source
-~~~~~~
-
-Models
-======
-
-.. automodule:: checkcve.models
-:members:
-
-Views
-=====
-
-.. automodule:: checkcve.views
-:members:
-        :undoc-members:
-        :special-members:
-        :inherited-members:
-        :show-inheritance:
-
