@@ -3,8 +3,8 @@ import importlib
 from celery import task
 from celery.utils.log import get_task_logger
 
-from home.models import Probe, Job
-from home.notifications import send_notification
+from core.models import Probe, Job
+from core.notifications import send_notification
 
 logger = get_task_logger(__name__)
 

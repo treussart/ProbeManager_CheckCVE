@@ -8,9 +8,9 @@ from django.db.models import Q
 from django.utils import timezone
 
 from checkcve.utils import convert_to_cpe, CVESearch
-from home.models import Probe, OsSupported
-from home.notifications import send_notification
-from home.ssh import execute
+from core.models import Probe, OsSupported
+from core.notifications import send_notification
+from core.ssh import execute
 
 logger = logging.getLogger(__name__)
 
