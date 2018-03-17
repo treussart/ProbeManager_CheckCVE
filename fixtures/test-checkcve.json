@@ -1,0 +1,62 @@
+[
+{
+    "model": "checkcve.cve",
+    "pk": 1,
+    "fields": {
+        "name": "CVE-2017-9798"
+    }
+},
+{
+    "model": "checkcve.cve",
+    "pk": 2,
+    "fields": {
+        "name": "CVE-2017-7659"
+    }
+},
+{
+    "model": "checkcve.cve",
+    "pk": 3,
+    "fields": {
+        "name": "CVE-2017-7668"
+    }
+},
+{
+    "model": "checkcve.cve",
+    "pk": 4,
+    "fields": {
+        "name": "CVE-2017-3167"
+    }
+},
+{
+    "model": "checkcve.cve",
+    "pk": 5,
+    "fields": {
+        "name": "CVE-2017-12166"
+    }
+},
+{
+    "model": "checkcve.whitelist",
+    "pk": 1,
+    "fields": {
+        "name": "server",
+        "cves": [
+            1,
+            2,
+            4,
+            5
+        ]
+    }
+},
+{
+    "model": "checkcve.checkcve",
+    "pk": 1,
+    "fields": {
+        "whitelist": 1,
+        "vulnerability_found": false,
+        "vulnerabilities": "[]",
+        "softwares": [
+            7
+        ]
+    }
+}
+]
