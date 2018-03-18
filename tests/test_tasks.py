@@ -1,7 +1,6 @@
 """ venv/bin/python probemanager/manage.py test checkcve.tests.test_tasks --settings=probemanager.settings.dev """
 from django.test import TestCase
 
-from core.models import Probe
 from checkcve.models import Checkcve
 from checkcve.tasks import check_cve
 

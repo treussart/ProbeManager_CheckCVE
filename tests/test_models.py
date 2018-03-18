@@ -1,5 +1,6 @@
 """ venv/bin/python probemanager/manage.py test checkcve.tests.test_models --settings=probemanager.settings.dev """
 from django.test import TestCase
+
 from checkcve.models import Checkcve, Cve, WhiteList, Software
 from core.models import Probe
 
