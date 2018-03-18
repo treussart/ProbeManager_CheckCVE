@@ -5,7 +5,7 @@ from core.models import Probe
 
 
 class CveTest(TestCase):
-    fixtures = ['init', 'crontab', 'init-checkcve', 'test-core-server', 'test-core-probe', 'test-checkcve']
+    fixtures = ['init', 'crontab', 'init-checkcve', 'test-core-server', 'test-checkcve']
 
     def test_cve(self):
         all_cve = Cve.get_all()
@@ -16,7 +16,7 @@ class CveTest(TestCase):
 
 
 class SoftwareTest(TestCase):
-    fixtures = ['init', 'crontab', 'init-checkcve', 'test-core-secrets', 'test-core-probe', 'test-checkcve']
+    fixtures = ['init', 'crontab', 'init-checkcve', 'test-core-secrets', 'test-checkcve']
 
     def test_software(self):
         all_software = Software.get_all()
@@ -28,7 +28,7 @@ class SoftwareTest(TestCase):
 
 
 class WhitelistTest(TestCase):
-    fixtures = ['init', 'crontab', 'init-checkcve', 'test-core-server', 'test-core-probe', 'test-checkcve']
+    fixtures = ['init', 'crontab', 'init-checkcve', 'test-core-server', 'test-checkcve']
 
     def test_whitelist(self):
         all_whitelist = WhiteList.get_all()
@@ -40,13 +40,13 @@ class WhitelistTest(TestCase):
 
 
 class CheckcveTest(TestCase):
-    fixtures = ['init', 'crontab', 'init-checkcve', 'test-core-secrets', 'test-core-probe', 'test-checkcve']
+    fixtures = ['init', 'crontab', 'init-checkcve', 'test-core-secrets', 'test-checkcve']
 
     def test_cve(self):
         all_check_cve = Checkcve.get_all()
         check_cve = Checkcve.get_by_id(1)
         self.assertEqual(len(all_check_cve), 1)
         self.assertFalse(check_cve.vulnerability_found)
-        self.assertEqual(str(check_cve), "probe1  test")
+        self.assertEqual(str(check_cve), "checkcve1  test")
         self.assertEqual(check_cve.type, "Checkcve")
         self.assertIn("<h2>cpe:/a:openssl:openssl:1.1.0</h2>", check_cve.check_cve())
