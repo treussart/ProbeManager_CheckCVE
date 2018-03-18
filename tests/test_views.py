@@ -2,6 +2,8 @@
 from django.contrib.auth.models import User
 from django.test import Client, TestCase
 
+from checkcve.models import Checkcve
+
 
 class ViewsCheckCveTest(TestCase):
     fixtures = ['init', 'crontab', 'init-checkcve', 'test-core-secrets', 'test-checkcve']
@@ -32,11 +34,12 @@ class ViewsCheckCveTest(TestCase):
         """
         Index Page for an instance of Checkcve
         """
-        response = self.client.get('/checkcve/check/1', follow=True)
+        checkcve = Checkcve.get_by_id(1)
+        response = self.client.get('/checkcve/check/' + str(checkcve.id), follow=True)
         self.assertEqual(response.status_code, 200)
         self.assertIn('<title>Checkcve</title>', str(response.content))
         self.assertEqual('checkcve/index.html', response.templates[0].name)
         self.assertIn('checkcve', response.resolver_match.app_names)
         self.assertIn('function check_cve', str(response.resolver_match.func))
         with self.assertTemplateUsed('checkcve/index.html'):
-            self.client.get('/checkcve/check/1', follow=True)
+            self.client.get('/checkcve/check/' + str(checkcve.id), follow=True)
