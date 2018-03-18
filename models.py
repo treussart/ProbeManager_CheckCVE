@@ -11,28 +11,16 @@ from checkcve.utils import convert_to_cpe, CVESearch
 from core.models import Probe, OsSupported
 from core.notifications import send_notification
 from core.ssh import execute
+from core.modelsmixins import CommonMixin
 
 logger = logging.getLogger(__name__)
 
 
-class Cve(models.Model):
+class Cve(CommonMixin, models.Model):
     name = models.CharField(max_length=100, unique=True, null=False, blank=False)
 
     def __str__(self):
         return self.name
-
-    @classmethod
-    def get_all(cls):
-        return cls.objects.all()
-
-    @classmethod
-    def get_by_id(cls, id):
-        try:
-            object = cls.objects.get(id=id)
-        except cls.DoesNotExist as e:
-            logger.debug('Tries to access an object that does not exist : ' + str(e))
-            return None
-        return object
 
     @classmethod
     def get_by_name(cls, name):
@@ -44,7 +32,7 @@ class Cve(models.Model):
         return object
 
 
-class WhiteList(models.Model):
+class WhiteList(CommonMixin, models.Model):
     """
     The white list of CVE (Software not vulnerable).
     """
@@ -59,19 +47,6 @@ class WhiteList(models.Model):
 
     def __str__(self):
         return self.name
-
-    @classmethod
-    def get_all(cls):
-        return cls.objects.all()
-
-    @classmethod
-    def get_by_id(cls, id):
-        try:
-            object = cls.objects.get(id=id)
-        except cls.DoesNotExist as e:
-            logger.debug('Tries to access an object that does not exist : ' + str(e))
-            return None
-        return object
 
     @classmethod
     def get_by_name(cls, name):
@@ -91,7 +66,7 @@ class WhiteList(models.Model):
         return test
 
 
-class Software(models.Model):
+class Software(CommonMixin, models.Model):
     """
     The software to check the common vulnerabilities and exposures.
     """
@@ -111,19 +86,6 @@ class Software(models.Model):
 
     def __str__(self):
         return self.name + " - " + self.os.name + " - " + self.instaled_by
-
-    @classmethod
-    def get_all(cls):
-        return cls.objects.all()
-
-    @classmethod
-    def get_by_id(cls, id):
-        try:
-            object = cls.objects.get(id=id)
-        except cls.DoesNotExist as e:
-            logger.debug('Tries to access an object that does not exist : ' + str(e))
-            return None
-        return object
 
     def get_version(self, probe):
         software_by_os = Software.objects.get(name=self.name, os=probe.server.os)
@@ -195,7 +157,7 @@ class Checkcve(Probe):
             self.vulnerability_found = True
             self.vulnerabilities = vulnerabilities_list
             self.save()
-            if settings.HOST:
+            if hasattr(settings, 'HOST'):
                 link = "<br/><a href='https://" + settings.HOST + "'>Edit in ProbeManager</a>"
                 list_new_cve = list_new_cve + link
             send_notification('%s new CVE' % nbr, list_new_cve, html=True)
