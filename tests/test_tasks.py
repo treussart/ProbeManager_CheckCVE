@@ -1,5 +1,6 @@
 """ venv/bin/python probemanager/manage.py test checkcve.tests.test_tasks --settings=probemanager.settings.dev """
 from django.test import TestCase
+from django.conf import settings
 
 from checkcve.models import Checkcve
 from checkcve.tasks import check_cve
@@ -10,8 +11,10 @@ class TasksCheckCveTest(TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        pass
+        settings.CELERY_TASK_ALWAYS_EAGER = True
 
     def test_check_cve(self):
         checkcve = Checkcve.get_by_id(1)
-        self.assertIn("<h2>cpe:/a:openssl:openssl:1.1.0</h2>", check_cve(checkcve.name))
+        response = check_cve.delay(checkcve.name)
+        self.assertIn("<h2>cpe:/a:openssl:openssl:1.1.0</h2>", response.get())
+        self.assertTrue(response.successful())
