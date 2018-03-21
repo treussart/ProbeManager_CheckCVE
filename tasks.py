@@ -22,7 +22,7 @@ def check_cve(probe_name):
         job.update_job(response, 'Completed')
         logger.info("task - check_cve : " + str(probe_name) + " - " + str(response))
     except Exception as e:
-        logger.error(str(e))
+        logger.exception(str(e))
         job.update_job(str(e), 'Error')
         send_notification("Error during Check CVE for " + str(probe.name), str(e))
         return {"message": "Error for probe " + str(probe.name) + " to check CVE", "exception": str(e)}

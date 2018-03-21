@@ -98,7 +98,7 @@ class Software(CommonMixin, models.Model):
         try:
             output = execute(probe.server, command)
         except Exception as e:
-            logger.error(e)
+            logger.exception('Error during get version')
             return str(e)
         logger.info("output : " + str(output))
         return output['get_version']

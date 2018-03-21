@@ -19,9 +19,10 @@ class CheckCVEAdmin(admin.ModelAdmin):
         for probe in obj:
             try:
                 response = probe.check_cve()
-                print(response)
+                logger.debug(response)
             except Exception as e:
                 test = False
+                logger.exception('Error in check_cve ')
                 errors.append(str(e))
         if test:
             messages.add_message(request, messages.SUCCESS, "Check CVE OK")
