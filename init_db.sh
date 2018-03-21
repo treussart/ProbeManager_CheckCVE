@@ -23,6 +23,7 @@ fi
 
 if [[ "$arg" = 'prod' ]]; then
     "$dest"venv/bin/python "$dest"probemanager/manage.py loaddata init-checkcve.json --settings=probemanager.settings.$arg
+    "$dest"venv/bin/python "$dest"probemanager/manage.py loaddata init-cve.json --settings=probemanager.settings.$arg
 elif [[ "$arg" = 'dev' ]]; then
     venv/bin/python probemanager/manage.py loaddata init-checkcve.json --settings=probemanager.settings.$arg
 elif [[ "$arg" = 'travis' ]]; then
