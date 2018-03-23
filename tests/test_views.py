@@ -43,3 +43,49 @@ class ViewsCheckCveTest(TestCase):
         self.assertIn('function probe_index', str(response.resolver_match.func))
         with self.assertTemplateUsed('checkcve/index.html'):
             self.client.get('/checkcve/' + str(checkcve.id), follow=True)
+
+    def test_admin(self):
+        """
+        Admin Pages
+        """
+        response = self.client.get('/admin/checkcve/', follow=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('<title>Checkcve administration', str(response.content))
+
+        response = self.client.get('/admin/checkcve/checkcve/', follow=True)
+        self.assertEqual(response.status_code, 200)
+        response = self.client.post('/admin/checkcve/checkcve/', {'action': 'check_cve', '_selected_action': '1'}, follow=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('Check CVE OK', str(response.content))
+        response = self.client.get('/admin/checkcve/checkcve/1/change/', follow=True)
+        self.assertEqual(response.status_code, 200)
+        response = self.client.post('/admin/checkcve/checkcve/1/change/', {'name': 'email',
+                                                                           'server': 1,
+                                                                           'softwares': '1, 2'}, follow=True)
+        self.assertEqual(response.status_code, 200)
+
+        response = self.client.get('/admin/checkcve/cve/', follow=True)
+        self.assertEqual(response.status_code, 200)
+        response = self.client.get('/admin/checkcve/cve/2/change/', follow=True)
+        self.assertEqual(response.status_code, 200)
+        response = self.client.post('/admin/checkcve/cve/2/change/', {'name': 'CVE-2017-7659'}, follow=True)
+        self.assertEqual(response.status_code, 200)
+
+        response = self.client.get('/admin/checkcve/software/', follow=True)
+        self.assertEqual(response.status_code, 200)
+        response = self.client.get('/admin/checkcve/software/2/change/', follow=True)
+        self.assertEqual(response.status_code, 200)
+        response = self.client.post('/admin/checkcve/software/2/change', {'name': 'postfix',
+                                                                          'os': 1,
+                                                                          'cpe': 'postfix:postfix',
+                                                                          'instaled_by': 'apt'}, follow=True)
+        self.assertEqual(response.status_code, 200)
+
+        response = self.client.get('/admin/checkcve/whitelist/', follow=True)
+        self.assertEqual(response.status_code, 200)
+        response = self.client.get('/admin/checkcve/whitelist/1/change/', follow=True)
+        self.assertEqual(response.status_code, 200)
+        response = self.client.post('/admin/checkcve/whitelist/1/change', {'name': 'reverse-proxy',
+                                                                          'cves': "1,2,4,5"
+                                                                           }, follow=True)
+        self.assertEqual(response.status_code, 200)
