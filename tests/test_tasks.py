@@ -18,3 +18,5 @@ class TasksCheckCveTest(TestCase):
         response = check_cve.delay(checkcve.name)
         self.assertIn("<h2>cpe:/a:openssl:openssl:1.1.0</h2>", response.get())
         self.assertTrue(response.successful())
+        self.assertEqual(check_cve.delay('name unknown').result,
+                         {"message": "Error - probe is None - param id not set : name unknown"})

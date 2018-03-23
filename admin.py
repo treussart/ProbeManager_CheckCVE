@@ -18,15 +18,14 @@ class CheckCVEAdmin(admin.ModelAdmin):
         test = True
         for probe in obj:
             try:
-                response = probe.check_cve()
-                logger.debug(response)
-            except Exception as e:
+                probe.check_cve()
+            except Exception as e:  # pragma: no cover
                 test = False
                 logger.exception('Error in check_cve ')
                 errors.append(str(e))
         if test:
             messages.add_message(request, messages.SUCCESS, "Check CVE OK")
-        else:
+        else:  # pragma: no cover
             messages.add_message(request, messages.ERROR, "Check CVE failed ! " + str(errors))
 
     actions = [check_cve]

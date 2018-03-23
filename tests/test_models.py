@@ -14,6 +14,9 @@ class CveTest(TestCase):
         self.assertEqual(len(all_cve), 5)
         self.assertEqual(cve.name, "CVE-2017-9798")
         self.assertEqual(str(cve), "CVE-2017-9798")
+        self.assertEqual(Cve.get_by_name("CVE-2017-9798"), cve)
+        with self.assertLogs(level='DEBUG'):
+            Cve.get_by_name("TEST NOT EXIST")
 
 
 class SoftwareTest(TestCase):
@@ -22,7 +25,7 @@ class SoftwareTest(TestCase):
     def test_software(self):
         all_software = Software.get_all()
         software = Software.get_by_id(1)
-        self.assertEqual(len(all_software), 8)
+        self.assertEqual(len(all_software), 9)
         self.assertEqual(software.name, "dovecot-imapd")
         self.assertEqual(str(software), "dovecot-imapd - debian - apt")
         self.assertEqual(software.get_version(Probe.get_by_id(1)), "OK")
@@ -38,6 +41,9 @@ class WhitelistTest(TestCase):
         self.assertEqual(whitelist.name, "server")
         self.assertEqual(str(whitelist), "server")
         self.assertTrue(whitelist.check_if_exists("CVE-2017-9798"))
+        self.assertEqual(WhiteList.get_by_name("server"), whitelist)
+        with self.assertLogs(level='DEBUG'):
+            WhiteList.get_by_name("TEST NOT EXIST")
 
 
 class CheckcveTest(TestCase):

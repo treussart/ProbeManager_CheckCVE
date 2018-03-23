@@ -97,7 +97,7 @@ class Software(CommonMixin, models.Model):
             command = {'get_version': "brew list " + str(self.name) + " --versions | cut -d ' ' -f 2"}
         try:
             output = execute(probe.server, command)
-        except Exception as e:
+        except Exception as e:  # pragma: no cover
             logger.exception('Error during get version')
             return str(e)
         logger.info("output : " + str(output))
@@ -157,7 +157,7 @@ class Checkcve(Probe):
             self.vulnerability_found = True
             self.vulnerabilities = vulnerabilities_list
             self.save()
-            if hasattr(settings, 'HOST'):
+            if hasattr(settings, 'HOST'):  # pragma: no cover
                 link = "<br/><a href='https://" + settings.HOST + "'>Edit in ProbeManager</a>"
                 list_new_cve = list_new_cve + link
             send_notification('%s new CVE' % nbr, list_new_cve, html=True)

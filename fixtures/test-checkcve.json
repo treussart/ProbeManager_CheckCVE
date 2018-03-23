@@ -75,5 +75,15 @@
             6
         ]
     }
+},
+{
+    "model": "checkcve.software",
+    "pk": 99,
+    "fields": {
+      "name": "postfix",
+      "os": 1,
+      "cpe": "postfix:postfix",
+      "instaled_by": "brew"
+    }
 }
 ]

@@ -48,13 +48,15 @@ class ViewsCheckCveTest(TestCase):
         """
         Admin Pages
         """
+        # index
         response = self.client.get('/admin/checkcve/', follow=True)
         self.assertEqual(response.status_code, 200)
         self.assertIn('<title>Checkcve administration', str(response.content))
-
+        # checkcve
         response = self.client.get('/admin/checkcve/checkcve/', follow=True)
         self.assertEqual(response.status_code, 200)
-        response = self.client.post('/admin/checkcve/checkcve/', {'action': 'check_cve', '_selected_action': '1'}, follow=True)
+        response = self.client.post('/admin/checkcve/checkcve/', {'action': 'check_cve', '_selected_action': '1'},
+                                    follow=True)
         self.assertEqual(response.status_code, 200)
         self.assertIn('Check CVE OK', str(response.content))
         response = self.client.get('/admin/checkcve/checkcve/1/change/', follow=True)
@@ -63,14 +65,24 @@ class ViewsCheckCveTest(TestCase):
                                                                            'server': 1,
                                                                            'softwares': '1, 2'}, follow=True)
         self.assertEqual(response.status_code, 200)
-
+        response = self.client.get('/admin/checkcve/checkcve/add/', follow=True)
+        self.assertEqual(response.status_code, 200)
+        response = self.client.post('/admin/checkcve/checkcve/add/', {'name': 'test',
+                                                                      'server': 1,
+                                                                      'scheduled_check_crontab': 3,
+                                                                      'softwares': '1, 2',
+                                                                      'whitelist': 1}, follow=True)
+        self.assertEqual(response.status_code, 200)
+        response = self.client.post('/admin/checkcve/checkcve/', {'action': 'delete_selected', '_selected_action': '2'})
+        self.assertEqual(response.status_code, 200)
+        # cve
         response = self.client.get('/admin/checkcve/cve/', follow=True)
         self.assertEqual(response.status_code, 200)
         response = self.client.get('/admin/checkcve/cve/2/change/', follow=True)
         self.assertEqual(response.status_code, 200)
         response = self.client.post('/admin/checkcve/cve/2/change/', {'name': 'CVE-2017-7659'}, follow=True)
         self.assertEqual(response.status_code, 200)
-
+        # software
         response = self.client.get('/admin/checkcve/software/', follow=True)
         self.assertEqual(response.status_code, 200)
         response = self.client.get('/admin/checkcve/software/2/change/', follow=True)
@@ -80,7 +92,7 @@ class ViewsCheckCveTest(TestCase):
                                                                           'cpe': 'postfix:postfix',
                                                                           'instaled_by': 'apt'}, follow=True)
         self.assertEqual(response.status_code, 200)
-
+        # whitelist
         response = self.client.get('/admin/checkcve/whitelist/', follow=True)
         self.assertEqual(response.status_code, 200)
         response = self.client.get('/admin/checkcve/whitelist/1/change/', follow=True)
