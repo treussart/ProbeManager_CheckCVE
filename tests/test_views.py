@@ -44,6 +44,12 @@ class ViewsCheckCveTest(TestCase):
         with self.assertTemplateUsed('checkcve/index.html'):
             self.client.get('/checkcve/' + str(checkcve.id), follow=True)
 
+    def test_check(self):
+        checkcve = Checkcve.get_by_id(1)
+        response = self.client.get('/checkcve/check/' + str(checkcve.id), follow=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('Check CVE launched with succeed.', str(response.content))
+
     def test_admin(self):
         """
         Admin Pages

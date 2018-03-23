@@ -8,7 +8,6 @@ from django_celery_beat.models import PeriodicTask, CrontabSchedule
 def convert_to_cpe(name, version):
     prefix = "cpe:/a:"
     delimiter = ":"
-    # print(name + delimiter + str(version))
     return prefix + name + delimiter + str(version)
 
 
@@ -23,7 +22,7 @@ class CVESearch():
             'User-Agent': 'PyCVESearch - python wrapper'})
 
     def _http_get(self, api_call, query=None):
-        if query is None:
+        if query is None:  # pragma: no cover
             response = self.session.get(urljoin(self.base_url, 'api/{}'.format(api_call)))
         else:
             response = self.session.get(urljoin(self.base_url, 'api/{}/{}'.format(api_call, query)))
