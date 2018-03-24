@@ -21,7 +21,7 @@ def check_cve(request, id):
     probe = Probe.get_by_id(id)
     my_class = getattr(importlib.import_module(probe.type.lower() + ".models"), probe.type)
     probe = my_class.get_by_id(id)
-    if probe is None:
+    if probe is None:  # pragma: no cover
         return HttpResponseNotFound
     else:
         try:
