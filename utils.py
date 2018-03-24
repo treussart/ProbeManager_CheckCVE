@@ -2,7 +2,7 @@ import json
 from urllib.parse import urljoin
 
 import requests
-from django_celery_beat.models import PeriodicTask, CrontabSchedule
+from django_celery_beat.models import PeriodicTask
 
 
 def convert_to_cpe(name, version):
