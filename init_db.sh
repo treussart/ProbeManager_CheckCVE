@@ -2,30 +2,8 @@
 
 echo '## Load data CheckCVE ##'
 # Get args
-if [ -z $1 ] || [[ "$1" = 'dev' ]]; then
-    arg="dev"
-    dest=""
-elif [[ "$1" = 'travis' ]]; then
-    arg=$1
-    dest=""
-elif [[ "$1" = 'prod' ]]; then
-    arg=$1
-    if [ -z $2 ]; then
-        dest='/usr/local/share'
-    else
-        dest=$2
-    fi
-else
-    echo 'Bad argument'
-    exit 1
-fi
+arg=$1
+destfull=$2
 
-
-if [[ "$arg" = 'prod' ]]; then
-    "$dest"venv/bin/python "$dest"probemanager/manage.py loaddata init-checkcve.json --settings=probemanager.settings.$arg
-    "$dest"venv/bin/python "$dest"probemanager/manage.py loaddata init-cve.json --settings=probemanager.settings.$arg
-elif [[ "$arg" = 'dev' ]]; then
-    venv/bin/python probemanager/manage.py loaddata init-checkcve.json --settings=probemanager.settings.$arg
-elif [[ "$arg" = 'travis' ]]; then
-    python probemanager/manage.py loaddata init-checkcve.json --settings=probemanager.settings.dev
-fi
+python "$destfull"probemanager/manage.py loaddata init-checkcve.json --settings=probemanager.settings.$arg
+python "$destfull"probemanager/manage.py loaddata init-cve.json --settings=probemanager.settings.$arg
