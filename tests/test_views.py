@@ -69,18 +69,30 @@ class ViewsCheckCveTest(TestCase):
         self.assertEqual(response.status_code, 200)
         response = self.client.post('/admin/checkcve/checkcve/1/change/', {'name': 'email',
                                                                            'server': 1,
-                                                                           'softwares': '1, 2'}, follow=True)
+                                                                           'softwares': [1, 2]}, follow=True)
         self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(Checkcve.get_all()), 1)
         response = self.client.get('/admin/checkcve/checkcve/add/', follow=True)
         self.assertEqual(response.status_code, 200)
         response = self.client.post('/admin/checkcve/checkcve/add/', {'name': 'test',
-                                                                      'server': 1,
                                                                       'scheduled_check_crontab': 3,
-                                                                      'softwares': '1, 2',
+                                                                      'server': 1,
+                                                                      'softwares': [1, 2],
                                                                       'whitelist': 1}, follow=True)
         self.assertEqual(response.status_code, 200)
-        response = self.client.post('/admin/checkcve/checkcve/', {'action': 'delete_selected', '_selected_action': '2'})
+        self.assertIn(' was added successfully', str(response.content))
+        self.assertEqual(len(Checkcve.get_all()), 2)
+        response = self.client.post('/admin/checkcve/checkcve/', {'action': 'delete_selected', '_selected_action': '2'},
+                                    follow=True)
         self.assertEqual(response.status_code, 200)
+        self.assertIn('Are you sure you want to delete the selected checkcve?', str(response.content))
+        response = self.client.post('/admin/checkcve/checkcve/', {'action': 'delete_selected',
+                                                                  '_selected_action': '2',
+                                                                  'post': 'yes'},
+                                    follow=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('Successfully deleted 1 ', str(response.content))
+        self.assertEqual(len(Checkcve.get_all()), 1)
         # cve
         response = self.client.get('/admin/checkcve/cve/', follow=True)
         self.assertEqual(response.status_code, 200)
