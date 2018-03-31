@@ -2,6 +2,7 @@
 from django.test import TestCase
 
 from checkcve.models import Checkcve, Cve, WhiteList, Software
+from core.models import OsSupported
 from core.models import Probe
 
 
@@ -29,6 +30,9 @@ class SoftwareTest(TestCase):
         self.assertEqual(software.name, "dovecot-imapd")
         self.assertEqual(str(software), "dovecot-imapd - debian - apt")
         self.assertEqual(software.get_version(Probe.get_by_id(1)), "OK")
+        software_brew = Software.objects.create(name='test', os=OsSupported.get_by_id(1), cpe='postfix:postfix', instaled_by='brew')
+        self.assertEqual(software_brew.get_version(Checkcve.get_by_id(1)), 'OK')  # ????
+        software_brew.delete()
 
 
 class WhitelistTest(TestCase):
