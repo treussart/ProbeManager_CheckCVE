@@ -17,9 +17,3 @@ Features
 ========
 
  * Check if exist a CVE for a software on a remote server.
-
-
-TODO
-====
-
- * increase tests
