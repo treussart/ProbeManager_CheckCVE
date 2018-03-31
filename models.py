@@ -144,7 +144,7 @@ class Checkcve(Probe):
                     if self.server.os.name == 'debian':
                         title = "<h4><a href='https://security-tracker.debian.org/tracker/" + cves_json[i][
                             'id'] + "'>" + cves_json[i]['id'] + " :</a></h4>"
-                    else:
+                    else:  # pragma: no cover
                         title = "<h4><a href='https://www.cvedetails.com/cve/" + cves_json[i]['id'] + "'>" + \
                                 cves_json[i]['id'] + " :</a></h4>"
                     infos = "<b>Infos server :</b> " + str(self.server) + "<br/><br/>"

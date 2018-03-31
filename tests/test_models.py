@@ -2,8 +2,7 @@
 from django.test import TestCase
 
 from checkcve.models import Checkcve, Cve, WhiteList, Software
-from core.models import OsSupported
-from core.models import Probe
+from core.models import Probe, Server, OsSupported
 
 
 class CveTest(TestCase):
@@ -61,3 +60,8 @@ class CheckcveTest(TestCase):
         self.assertEqual(str(check_cve), "checkcve1  test")
         self.assertEqual(check_cve.type, "Checkcve")
         self.assertIn("<h2>cpe:/a:openssl:openssl:1.1.0</h2>", check_cve.check_cve())
+        checkcve_1 = Checkcve.objects.create(name='test 2', server=Server.get_by_id(1), whitelist=WhiteList.get_by_id(1), vulnerability_found=False, vulnerabilities=[])
+        checkcve_1.softwares.add(Software.get_by_id(3))
+        checkcve_1.save()
+        self.assertIn("No CVE found !", checkcve_1.check_cve())
+        checkcve_1.delete()
