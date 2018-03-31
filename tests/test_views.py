@@ -49,6 +49,8 @@ class ViewsCheckCveTest(TestCase):
         response = self.client.get('/checkcve/check/' + str(checkcve.id), follow=True)
         self.assertEqual(response.status_code, 200)
         self.assertIn('Check CVE launched with succeed.', str(response.content))
+        response = self.client.get('/checkcve/check/' + str(checkcve.id), follow=True)
+        self.assertEqual(response.status_code, 200)
 
     def test_admin(self):
         """
