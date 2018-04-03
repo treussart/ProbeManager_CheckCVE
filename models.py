@@ -25,11 +25,11 @@ class Cve(CommonMixin, models.Model):
     @classmethod
     def get_by_name(cls, name):
         try:
-            object = cls.objects.get(name=name)
+            obj = cls.objects.get(name=name)
         except cls.DoesNotExist as e:
             logger.debug('Tries to access an object that does not exist : ' + str(e))
             return None
-        return object
+        return obj
 
 
 class WhiteList(CommonMixin, models.Model):
@@ -51,11 +51,11 @@ class WhiteList(CommonMixin, models.Model):
     @classmethod
     def get_by_name(cls, name):
         try:
-            object = cls.objects.get(name=name)
+            obj = cls.objects.get(name=name)
         except cls.DoesNotExist as e:
             logger.debug('Tries to access an object that does not exist : ' + str(e))
             return None
-        return object
+        return obj
 
     def check_if_exists(self, cve_name):
         test = False
