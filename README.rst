@@ -5,7 +5,7 @@ CheckCVE for Probe Manager
 Presentation
 ~~~~~~~~~~~~
 
-|Licence| |Version|
+|Licence| |Version| |Coverage_Status|
 
 .. image:: https://api.codacy.com/project/badge/Grade/64dc0388b44a4b75952d2b6ad3920c0c?branch=develop
    :alt: Codacy Badge
