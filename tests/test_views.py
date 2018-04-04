@@ -43,6 +43,8 @@ class ViewsCheckCveTest(TestCase):
         self.assertIn('function probe_index', str(response.resolver_match.func))
         with self.assertTemplateUsed('checkcve/index.html'):
             self.client.get('/checkcve/' + str(checkcve.id), follow=True)
+        response = self.client.get('/checkcve/99', follow=True)
+        self.assertEqual(response.status_code, 404)
 
     def test_check(self):
         checkcve = Checkcve.get_by_id(1)
