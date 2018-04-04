@@ -14,13 +14,13 @@ logger = logging.getLogger(__name__)
 
 
 @login_required
-def check_cve(request, id):
+def check_cve(request, pk):
     """
     Check CVE for an instance.
     """
-    probe = Probe.get_by_id(id)
+    probe = Probe.get_by_id(pk)
     my_class = getattr(importlib.import_module(probe.type.lower() + ".models"), probe.type)
-    probe = my_class.get_by_id(id)
+    probe = my_class.get_by_id(pk)
     if probe is None:  # pragma: no cover
         return HttpResponseNotFound
     else:
