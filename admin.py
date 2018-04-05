@@ -21,7 +21,7 @@ class CheckCVEAdmin(admin.ModelAdmin):
                 probe.check_cve()
             except Exception as e:  # pragma: no cover
                 test = False
-                logger.exception('Error in check_cve ')
+                logger.exception('Error in check_cve ' + str(self.actions))
                 errors.append(str(e))
         if test:
             messages.add_message(request, messages.SUCCESS, "Check CVE OK")
@@ -34,9 +34,8 @@ class CheckCVEAdmin(admin.ModelAdmin):
         create_check_cve_task(obj)
         super().save_model(request, obj, form, change)
 
-    """A ModelAdmin that uses a different form class when adding an object."""
-
     def get_form(self, request, obj=None, **kwargs):
+        """A ModelAdmin that uses a different form class when adding an object."""
         if obj is None:
             return super(CheckCVEAdmin, self).get_form(request, obj, **kwargs)
         else:

@@ -26,8 +26,8 @@ def check_cve(request, pk):
     else:
         try:
             task_cve.delay(probe.name)
-            messages.add_message(request, messages.SUCCESS,
-                                 mark_safe("Check CVE launched with succeed. <a href='/admin/core/job/'>View Job</a>"))
+            messages.add_message(request, messages.SUCCESS, "Check CVE launched with succeed. " +
+                                 mark_safe("<a href='/admin/core/job/'>View Job</a>"))
         except Exception as e:  # pragma: no cover
             logger.exception('Check CVE failed ! ' + str(e))
             messages.add_message(request, messages.ERROR, "Check CVE failed ! " + str(e))

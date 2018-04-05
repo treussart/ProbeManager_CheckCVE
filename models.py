@@ -115,7 +115,7 @@ class Checkcve(Probe):
                                  default=list())
 
     def __init__(self, *args, **kwargs):
-        super(Probe, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.type = self.__class__.__name__
 
     def __str__(self):
