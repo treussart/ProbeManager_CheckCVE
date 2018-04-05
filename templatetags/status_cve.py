@@ -5,11 +5,11 @@ from django import template
 
 from core.models import Probe
 
-logger = logging.getLogger(__name__)
-register = template.Library()
+logger = logging.getLogger(__name__)  # pragma: no cover
+register = template.Library()  # pragma: no cover
 
 
-@register.filter
+@register.filter  # pragma: no cover
 def status_cve(probe_id):
     probe = Probe.get_by_id(probe_id)
     if probe is None:  # pragma: no cover
