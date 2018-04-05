@@ -12,27 +12,19 @@ from core.models import Probe, OsSupported
 from core.notifications import send_notification
 from core.ssh import execute
 from core.modelsmixins import CommonMixin
+from checkcve.modelsmixins import NameMixin
 
 logger = logging.getLogger(__name__)
 
 
-class Cve(CommonMixin, models.Model):
+class Cve(NameMixin, CommonMixin, models.Model):
     name = models.CharField(max_length=100, unique=True, null=False, blank=False)
 
     def __str__(self):
         return self.name
 
-    @classmethod
-    def get_by_name(cls, name):
-        try:
-            obj = cls.objects.get(name=name)
-        except cls.DoesNotExist as e:
-            logger.debug('Tries to access an object that does not exist : ' + str(e))
-            return None
-        return obj
 
-
-class WhiteList(CommonMixin, models.Model):
+class WhiteList(NameMixin, CommonMixin, models.Model):
     """
     The white list of CVE (Software not vulnerable).
     """
@@ -47,15 +39,6 @@ class WhiteList(CommonMixin, models.Model):
 
     def __str__(self):
         return self.name
-
-    @classmethod
-    def get_by_name(cls, name):
-        try:
-            obj = cls.objects.get(name=name)
-        except cls.DoesNotExist as e:
-            logger.debug('Tries to access an object that does not exist : ' + str(e))
-            return None
-        return obj
 
     def check_if_exists(self, cve_name):
         test = False
@@ -141,6 +124,7 @@ class Checkcve(Probe):
                     vulnerabilities_list.append(cves_json[i]['id'])
                     new = True
                     nbr += 1
+                    logger.info("CVE not in Whitelist : " + str(val))
                     if self.server.os.name == 'debian':
                         title = "<h4><a href='https://security-tracker.debian.org/tracker/" + cves_json[i][
                             'id'] + "'>" + cves_json[i]['id'] + " :</a></h4>"
