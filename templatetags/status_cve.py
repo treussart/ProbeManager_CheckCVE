@@ -1,15 +1,13 @@
-import importlib
-import logging
-
-from django import template
-
-from core.models import Probe
+import importlib  # pragma: no cover
+import logging  # pragma: no cover
+from django import template  # pragma: no cover
+from core.models import Probe  # pragma: no cover
 
 logger = logging.getLogger(__name__)  # pragma: no cover
 register = template.Library()  # pragma: no cover
 
 
-@register.filter
+@register.filter  # pragma: no cover
 def status_cve(probe_id):
     probe = Probe.get_by_id(probe_id)
     if probe is None:  # pragma: no cover
