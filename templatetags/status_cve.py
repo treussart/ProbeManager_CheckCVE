@@ -9,7 +9,7 @@ logger = logging.getLogger(__name__)  # pragma: no cover
 register = template.Library()  # pragma: no cover
 
 
-@register.filter  # pragma: no cover
+@register.filter
 def status_cve(probe_id):
     probe = Probe.get_by_id(probe_id)
     if probe is None:  # pragma: no cover
