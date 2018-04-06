@@ -3,8 +3,8 @@ import logging  # pragma: no cover
 from django import template  # pragma: no cover
 from core.models import Probe  # pragma: no cover
 
-logger = logging.getLogger(__name__)  # pragma: no cover
-register = template.Library()  # pragma: no cover
+logger = logging.getLogger(__name__)
+register = template.Library()
 
 
 @register.filter  # pragma: no cover
