@@ -8,4 +8,4 @@ class TemplateTagsTest(TestCase):
     fixtures = ['init', 'crontab', 'init-checkcve', 'test-core-secrets', 'test-checkcve']
 
     def test_status_cve(self):
-        self.assertEqual('success', status_cve(1)
+        self.assertEqual('success', status_cve(1))
