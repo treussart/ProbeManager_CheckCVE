@@ -5,8 +5,8 @@ from django import template
 
 from core.models import Probe
 
-logger = logging.getLogger(__name__)  # pragma: no cover
-register = template.Library()  # pragma: no cover
+logger = logging.getLogger(__name__)
+register = template.Library()
 
 
 @register.filter
