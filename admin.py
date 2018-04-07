@@ -42,14 +42,7 @@ class CheckCVEAdmin(admin.ModelAdmin):
             return CheckCVEChangeForm
 
 
-class SoftwareAdmin(admin.ModelAdmin):
-    class Media:
-        js = (
-            'checkcve/js/mask-command-field.js',
-        )
-
-
 admin.site.register(Checkcve, CheckCVEAdmin)
-admin.site.register(Software, SoftwareAdmin)
+admin.site.register(Software)
 admin.site.register(WhiteList)
 admin.site.register(Cve)

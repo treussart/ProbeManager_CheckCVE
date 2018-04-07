@@ -54,13 +54,12 @@ class Software(CommonMixin, models.Model):
     The software to check the common vulnerabilities and exposures.
     """
     INSTALED_CHOICES = (
-        ('manual', 'manual'),
         ('apt', 'apt'),
         ('brew', 'brew'),
     )
     name = models.CharField(max_length=100, null=False, blank=False)
     os = models.ForeignKey(OsSupported, on_delete=models.CASCADE)
-    command = models.CharField(max_length=700, null=True, blank=True)
+    command = models.CharField(max_length=700, null=True, blank=True, editable=False)
     cpe = models.CharField(max_length=100, null=False, blank=False)
     instaled_by = models.CharField(max_length=255, choices=INSTALED_CHOICES, null=False, blank=False)
 
