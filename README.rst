@@ -27,3 +27,8 @@ Features
 ========
 
  * Check if exist a CVE for a software on a remote server.
+
+Installation
+~~~~~~~~~~~~
+
+Install with `ProbeManager <https://github.com/treussart/ProbeManager/>`_
