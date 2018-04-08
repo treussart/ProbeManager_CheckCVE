@@ -1,8 +1,6 @@
 import importlib
 import logging
-
 from django import template
-
 from core.models import Probe
 
 logger = logging.getLogger(__name__)

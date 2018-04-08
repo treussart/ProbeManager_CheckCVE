@@ -47,7 +47,7 @@
       "os": 1,
       "command": "export LC_ALL=en_US.UTF-8; export LANG=en_US.UTF-8; export LC_ALL=en_US.UTF-8; export LANG=en_US.UTF-8;  echo $(sudo mongod --version | grep -Po '(\\d+\\.)+\\d+' -m 1 )",
       "cpe": "mongodb:mongodb",
-      "instaled_by": "manual"
+      "instaled_by": "brew"
     }
   },
   {
