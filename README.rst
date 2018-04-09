@@ -2,8 +2,6 @@
 CheckCVE for Probe Manager
 ===========================
 
-Presentation
-~~~~~~~~~~~~
 
 |Licence| |Version|
 
@@ -19,6 +17,9 @@ Presentation
 .. |Licence| image:: https://img.shields.io/github/license/treussart/ProbeManager_CheckCVE.svg
 .. |Version| image:: https://img.shields.io/github/tag/treussart/ProbeManager_CheckCVE.svg
 
+
+Presentation
+~~~~~~~~~~~~
 
 Module for check the CVE of softwares
 
