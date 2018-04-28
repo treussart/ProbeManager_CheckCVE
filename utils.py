@@ -11,7 +11,7 @@ def convert_to_cpe(name, version):
     return prefix + name + delimiter + str(version)
 
 
-class CVESearch():
+class CVESearch:
 
     def __init__(self, base_url='https://cve.circl.lu', proxies=None):
         self.base_url = base_url

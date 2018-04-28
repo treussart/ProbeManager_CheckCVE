@@ -3,6 +3,7 @@ from django.test import TestCase
 
 from checkcve.templatetags import status_cve
 
+
 class TemplateTagsTest(TestCase):
     fixtures = ['init', 'crontab', 'init-checkcve', 'test-core-secrets', 'test-checkcve']
 
