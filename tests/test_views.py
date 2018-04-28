@@ -120,6 +120,6 @@ class ViewsCheckCveTest(TestCase):
         response = self.client.get('/admin/checkcve/whitelist/1/change/', follow=True)
         self.assertEqual(response.status_code, 200)
         response = self.client.post('/admin/checkcve/whitelist/1/change', {'name': 'reverse-proxy',
-                                                                          'cves': "1,2,4,5"
+                                                                           'cves': "1,2,4,5"
                                                                            }, follow=True)
         self.assertEqual(response.status_code, 200)

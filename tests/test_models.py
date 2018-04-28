@@ -29,7 +29,10 @@ class SoftwareTest(TestCase):
         self.assertEqual(software.name, "dovecot-imapd")
         self.assertEqual(str(software), "dovecot-imapd - debian - apt")
         self.assertEqual(software.get_version(Probe.get_by_id(1)), "OK")
-        software_brew = Software.objects.create(name='test', os=OsSupported.get_by_id(1), cpe='postfix:postfix', instaled_by='brew')
+        software_brew = Software.objects.create(name='test',
+                                                os=OsSupported.get_by_id(1),
+                                                cpe='postfix:postfix',
+                                                instaled_by='brew')
         self.assertEqual(software_brew.get_version(Checkcve.get_by_id(1)), 'OK')  # ????
         software_brew.delete()
 
@@ -60,7 +63,11 @@ class CheckcveTest(TestCase):
         self.assertEqual(str(check_cve), "checkcve1  test")
         self.assertEqual(check_cve.type, "Checkcve")
         self.assertIn("<h2>cpe:/a:openssl:openssl:1.1.0</h2>", check_cve.check_cve())
-        checkcve_1 = Checkcve.objects.create(name='test 2', server=Server.get_by_id(1), whitelist=WhiteList.get_by_id(1), vulnerability_found=False, vulnerabilities=[])
+        checkcve_1 = Checkcve.objects.create(name='test 2',
+                                             server=Server.get_by_id(1),
+                                             whitelist=WhiteList.get_by_id(1),
+                                             vulnerability_found=False,
+                                             vulnerabilities=[])
         checkcve_1.softwares.add(Software.get_by_id(3))
         checkcve_1.save()
         self.assertIn("No CVE found !", checkcve_1.check_cve())
