@@ -12,7 +12,7 @@ class CheckcveSerializer(serializers.ModelSerializer):
 class CheckcveUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Checkcve
-        fields = 'name', 'description', 'server', 'softwares', 'whitelist'
+        fields = 'description', 'server', 'softwares', 'whitelist'
 
 
 class WhiteListSerializer(serializers.ModelSerializer):

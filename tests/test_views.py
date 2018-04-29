@@ -89,13 +89,7 @@ class ViewsCheckCveTest(TestCase):
         response = self.client.post('/admin/checkcve/checkcve/', {'action': 'delete_selected', '_selected_action': '2'},
                                     follow=True)
         self.assertEqual(response.status_code, 200)
-        self.assertIn('Are you sure you want to delete the selected checkcve?', str(response.content))
-        response = self.client.post('/admin/checkcve/checkcve/', {'action': 'delete_selected',
-                                                                  '_selected_action': '2',
-                                                                  'post': 'yes'},
-                                    follow=True)
-        self.assertEqual(response.status_code, 200)
-        self.assertIn('Successfully deleted 1 ', str(response.content))
+        self.assertIn('CheckCve instance test deleted', str(response.content))
         self.assertEqual(len(Checkcve.get_all()), 1)
         # cve
         response = self.client.get('/admin/checkcve/cve/', follow=True)

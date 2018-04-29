@@ -2,9 +2,10 @@ import logging
 
 from rest_framework import status
 from rest_framework import viewsets
-from rest_framework.mixins import ListModelMixin, RetrieveModelMixin, UpdateModelMixin
+from rest_framework import mixins
 from rest_framework.response import Response
 
+from django_celery_beat.models import PeriodicTask
 from checkcve.api import serializers
 from checkcve.models import Cve, Checkcve, WhiteList, Software
 from checkcve.utils import create_check_cve_task
@@ -12,7 +13,7 @@ from checkcve.utils import create_check_cve_task
 logger = logging.getLogger(__name__)
 
 
-class CheckcveViewSet(ListModelMixin, RetrieveModelMixin, viewsets.GenericViewSet):
+class CheckcveViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
     """
     API endpoint that allows groups to be viewed or edited.
     """
@@ -44,6 +45,18 @@ class CheckcveViewSet(ListModelMixin, RetrieveModelMixin, viewsets.GenericViewSe
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def destroy(self, request, pk=None):
+        checkcve = self.get_object()
+        try:
+            periodic_task = PeriodicTask.objects.get(
+                name=checkcve.name + "_check_cve")
+            periodic_task.delete()
+            logger.debug(str(periodic_task) + " deleted")
+        except PeriodicTask.DoesNotExist:  # pragma: no cover
+            pass
+        checkcve.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class CveViewSet(viewsets.ModelViewSet):

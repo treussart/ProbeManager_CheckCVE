@@ -12,4 +12,4 @@ class CheckCVEForm(ModelForm):
 class CheckCVEChangeForm(ModelForm):
     class Meta:
         model = Checkcve
-        fields = ('name', 'description', 'server', 'softwares', 'whitelist')
+        fields = ('description', 'server', 'softwares', 'whitelist')
