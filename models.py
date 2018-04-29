@@ -7,12 +7,12 @@ from django.db import models
 from django.db.models import Q
 from django.utils import timezone
 
+from checkcve.modelsmixins import NameMixin
 from checkcve.utils import convert_to_cpe, CVESearch
 from core.models import Probe, OsSupported
+from core.modelsmixins import CommonMixin
 from core.notifications import send_notification
 from core.ssh import execute
-from core.modelsmixins import CommonMixin
-from checkcve.modelsmixins import NameMixin
 
 logger = logging.getLogger(__name__)
 
