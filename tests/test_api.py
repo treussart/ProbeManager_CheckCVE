@@ -1,7 +1,7 @@
 """ venv/bin/python probemanager/manage.py test checkcve.tests.test_api --settings=probemanager.settings.dev """
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
-from django_celery_beat.models import PeriodicTask, CrontabSchedule
+from django_celery_beat.models import PeriodicTask
 from rest_framework import status
 from rest_framework.test import APIClient
 from rest_framework.test import APITestCase

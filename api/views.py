@@ -1,11 +1,11 @@
 import logging
 
+from django_celery_beat.models import PeriodicTask
+from rest_framework import mixins
 from rest_framework import status
 from rest_framework import viewsets
-from rest_framework import mixins
 from rest_framework.response import Response
 
-from django_celery_beat.models import PeriodicTask
 from checkcve.api import serializers
 from checkcve.models import Cve, Checkcve, WhiteList, Software
 from checkcve.utils import create_check_cve_task

@@ -2,7 +2,6 @@ import logging
 
 from django.contrib import admin
 from django.contrib import messages
-
 from django_celery_beat.models import PeriodicTask
 
 from checkcve.forms import CheckCVEForm, CheckCVEChangeForm
