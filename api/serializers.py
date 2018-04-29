@@ -6,7 +6,13 @@ from checkcve.models import Checkcve, WhiteList, Software, Cve
 class CheckcveSerializer(serializers.ModelSerializer):
     class Meta:
         model = Checkcve
-        fields = "__all__"
+        fields = 'name', 'description', 'scheduled_check_crontab', 'server', 'softwares', 'whitelist'
+
+
+class CheckcveUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Checkcve
+        fields = 'name', 'description', 'server', 'softwares', 'whitelist'
 
 
 class WhiteListSerializer(serializers.ModelSerializer):
