@@ -12,7 +12,7 @@ from checkcve.utils import create_check_cve_task
 logger = logging.getLogger(__name__)
 
 
-class CheckcveViewSet(ListModelMixin, RetrieveModelMixin, UpdateModelMixin, viewsets.GenericViewSet):
+class CheckcveViewSet(ListModelMixin, RetrieveModelMixin, viewsets.GenericViewSet):
     """
     API endpoint that allows groups to be viewed or edited.
     """
@@ -29,11 +29,6 @@ class CheckcveViewSet(ListModelMixin, RetrieveModelMixin, UpdateModelMixin, view
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
-class CheckcveUpdateViewSet(viewsets.GenericViewSet):
-    queryset = Checkcve.objects.all()
-    serializer_class = serializers.CheckcveUpdateSerializer
-
     def update(self, request, pk=None):
         checkcve = self.get_object()
         serializer = serializers.CheckcveUpdateSerializer(checkcve, data=request.data)
@@ -43,7 +38,12 @@ class CheckcveUpdateViewSet(viewsets.GenericViewSet):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def partial_update(self, request, pk=None):
-        return self.update(request)
+        checkcve = self.get_object()
+        serializer = serializers.CheckcveUpdateSerializer(checkcve, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class CveViewSet(viewsets.ModelViewSet):

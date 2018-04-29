@@ -5,5 +5,4 @@ urls_to_register = [
     (r'^checkcve/whitelist', views.WhiteListViewSet),
     (r'^checkcve/cve', views.CveViewSet),
     (r'^checkcve/checkcve', views.CheckcveViewSet),
-    (r'^checkcve/checkcve', views.CheckcveUpdateViewSet),
 ]
