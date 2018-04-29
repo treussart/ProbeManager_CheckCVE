@@ -43,6 +43,9 @@ class CheckcveUpdateViewSet(viewsets.GenericViewSet):
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    def partial_update(self, request, pk=None):
+        return self.update(request)
+
 
 class CveViewSet(viewsets.ModelViewSet):
     """
