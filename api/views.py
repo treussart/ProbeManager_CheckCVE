@@ -1,7 +1,7 @@
 import logging
 
 from rest_framework import viewsets
-from rest_framework.mixins import ListModelMixin, RetrieveModelMixin
+from rest_framework.mixins import ListModelMixin, RetrieveModelMixin, UpdateModelMixin
 from rest_framework.response import Response
 from rest_framework import status
 
@@ -13,7 +13,7 @@ from checkcve.utils import create_check_cve_task
 logger = logging.getLogger(__name__)
 
 
-class CheckcveViewSet(ListModelMixin, RetrieveModelMixin, viewsets.GenericViewSet):
+class CheckcveViewSet(ListModelMixin, RetrieveModelMixin, UpdateModelMixin, viewsets.GenericViewSet):
     """
     API endpoint that allows groups to be viewed or edited.
     """
