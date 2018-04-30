@@ -27,7 +27,7 @@ Module for check the CVE of softwares
 Features
 --------
 
- * Check if exist a CVE for a software on a remote server.
+* Check if exist a CVE for a software on a remote server.
 
 Installation
 ============
@@ -37,45 +37,47 @@ Install with `ProbeManager <https://github.com/treussart/ProbeManager/>`_
 Usage
 =====
 
-.. |Admin page| image:: https://raw.githubusercontent.com/treussart/ProbeManager_CheckCVE/develop/data/admin-index.png
-.. |Admin page for add a checkcve instance| image:: https://raw.githubusercontent.com/treussart/ProbeManager_CheckCVE/develop/data/admin-checkcve-add.png
-.. |Admin page for add a software| image:: https://raw.githubusercontent.com/treussart/ProbeManager_CheckCVE/develop/data/admin-software-add.png
-.. |Instance page| image:: https://raw.githubusercontent.com/treussart/ProbeManager_CheckCVE/develop/data/instance-index.png
-
-
 Administration Page of the module :
 -----------------------------------
 
-|Admin page|
+.. image:: https://raw.githubusercontent.com/treussart/ProbeManager_CheckCVE/develop/data/admin-index.png
+  :align: center
+  :width: 80%
 
 Page to add an instance which verifies the CVE of the software of a remote server :
 -----------------------------------------------------------------------------------
 
-|Admin page for add a checkcve instance|
+.. image:: https://raw.githubusercontent.com/treussart/ProbeManager_CheckCVE/develop/data/admin-checkcve-add.png
+  :align: center
+  :width: 80%
 
- * Give a unique name for this instance, example: server-proxy_checkcve.
- * Give a crontab for planning verifications of existing CVE.
- * Specify the server on which the software to be monitored is located.
- * Select the software to be monitored.
- * Select a whitelist for which the software are not vulnerable.
+* Give a unique name for this instance, example: server-proxy_checkcve.
+* Give a crontab for planning verifications of existing CVE.
+* Specify the server on which the software to be monitored is located.
+* Select the software to be monitored.
+* Select a whitelist for which the software are not vulnerable.
 
 Page to add a software for which a check of CVE can be made :
 -------------------------------------------------------------
 
-|Admin page for add a software|
+.. image:: https://raw.githubusercontent.com/treussart/ProbeManager_CheckCVE/develop/data/admin-software-add.png
+  :align: center
+  :width: 70%
 
- * Give the name of the software as seen by the OS. example: dovecot-imapd is the name of Dovecot on Debian.
- * Specify for which operating systems the software is installed.
- * Give his valid `CPE <https://nvd.nist.gov/products/cpe>`_ name.
- * Specify how it was installed, by which package manager.
+* Give the name of the software as seen by the OS. example: dovecot-imapd is the name of Dovecot on Debian.
+* Specify for which operating systems the software is installed.
+* Give his valid `CPE <https://nvd.nist.gov/products/cpe>`_ name.
+* Specify how it was installed, by which package manager.
 
 Page of an instance :
 ---------------------
 
-|Instance page|
+.. image:: https://raw.githubusercontent.com/treussart/ProbeManager_CheckCVE/develop/data/instance-index.png
+  :align: center
+  :width: 80%
 
- * The button 'Check CVE' launch a CVE audit, check if there are known vulnerabilities on this instance.
- * Under CVE found: There are link for CVE found, for debian it redirect to the security bug tracker and if not on www.cvedetails.com
+* The button 'Check CVE' launch a CVE audit, check if there are known vulnerabilities on this instance.
+* Under CVE found: There are link for CVE found, for debian it redirect to the security bug tracker and if not on www.cvedetails.com
 
 Miscellaneous
 -------------
