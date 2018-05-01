@@ -40,14 +40,14 @@ Usage
 Administration Page of the module :
 -----------------------------------
 
-.. image:: https://raw.githubusercontent.com/treussart/ProbeManager_CheckCVE/develop/data/admin-index.png
+.. image:: https://raw.githubusercontent.com/treussart/ProbeManager_CheckCVE/master/data/admin-index.png
   :align: center
   :width: 80%
 
 Page to add an instance which verifies the CVE of the software of a remote server :
 -----------------------------------------------------------------------------------
 
-.. image:: https://raw.githubusercontent.com/treussart/ProbeManager_CheckCVE/develop/data/admin-checkcve-add.png
+.. image:: https://raw.githubusercontent.com/treussart/ProbeManager_CheckCVE/master/data/admin-checkcve-add.png
   :align: center
   :width: 80%
 
@@ -60,7 +60,7 @@ Page to add an instance which verifies the CVE of the software of a remote serve
 Page to add a software for which a check of CVE can be made :
 -------------------------------------------------------------
 
-.. image:: https://raw.githubusercontent.com/treussart/ProbeManager_CheckCVE/develop/data/admin-software-add.png
+.. image:: https://raw.githubusercontent.com/treussart/ProbeManager_CheckCVE/master/data/admin-software-add.png
   :align: center
   :width: 70%
 
@@ -72,7 +72,7 @@ Page to add a software for which a check of CVE can be made :
 Page of an instance :
 ---------------------
 
-.. image:: https://raw.githubusercontent.com/treussart/ProbeManager_CheckCVE/develop/data/instance-index.png
+.. image:: https://raw.githubusercontent.com/treussart/ProbeManager_CheckCVE/master/data/instance-index.png
   :align: center
   :width: 80%
 
