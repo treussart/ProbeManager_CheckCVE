@@ -68,7 +68,7 @@ class Software(CommonMixin, models.Model):
         unique_together = ('name', 'os', 'instaled_by')
 
     def __str__(self):
-        return self.name + " - " + self.os.name + " - " + self.instaled_by
+        return str(self.name) + " - " + str(self.os.name) + " - " + str(self.instaled_by)
 
     def get_version(self, probe):
         software_by_os = Software.objects.get(name=self.name, os=probe.server.os)
@@ -102,7 +102,7 @@ class Checkcve(Probe):
         self.type = self.__class__.__name__
 
     def __str__(self):
-        return self.name + "  " + self.description
+        return str(self.name) + "  " + str(self.description)
 
     def delete(self, **kwargs):
         try:
