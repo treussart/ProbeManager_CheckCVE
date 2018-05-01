@@ -1,6 +1,7 @@
 """ venv/bin/python probemanager/manage.py test checkcve.tests.test_views --settings=probemanager.settings.dev """
 from django.contrib.auth.models import User
 from django.test import Client, TestCase
+from django_celery_beat.models import PeriodicTask
 
 from checkcve.models import Checkcve
 
@@ -86,10 +87,19 @@ class ViewsCheckCveTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertIn(' was added successfully', str(response.content))
         self.assertEqual(len(Checkcve.get_all()), 2)
+        self.assertTrue(PeriodicTask.objects.get(name="test_check_cve"))
+        self.assertTrue(PeriodicTask.objects.get(name="checkcve1_check_cve"))
         response = self.client.post('/admin/checkcve/checkcve/', {'action': 'delete_selected', '_selected_action': '2'},
                                     follow=True)
         self.assertEqual(response.status_code, 200)
-        self.assertIn('CheckCve instance test deleted', str(response.content))
+        self.assertIn('Are you sure you want to delete the selected ', str(response.content))
+        response = self.client.post('/admin/checkcve/checkcve/',
+                                    {'action': 'delete_selected',
+                                     '_selected_action': '2',
+                                     'post': 'yes'},
+                                    follow=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('Successfully deleted 1 ', str(response.content))
         self.assertEqual(len(Checkcve.get_all()), 1)
         # cve
         response = self.client.get('/admin/checkcve/cve/', follow=True)

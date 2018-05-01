@@ -9,7 +9,7 @@ from django.utils import timezone
 from django_celery_beat.models import PeriodicTask
 
 from checkcve.modelsmixins import NameMixin
-from checkcve.utils import convert_to_cpe, CVESearch
+from checkcve.utils import convert_to_cpe, CVESearch, create_check_cve_task
 from core.models import Probe, OsSupported
 from core.modelsmixins import CommonMixin
 from core.notifications import send_notification
@@ -113,6 +113,10 @@ class Checkcve(Probe):
         except PeriodicTask.DoesNotExist:  # pragma: no cover
             pass
         return super().delete(**kwargs)
+
+    def save(self, **kwargs):
+        super().save(**kwargs)
+        create_check_cve_task(self)
 
     def check_cve(self):
         cpe_list = list()

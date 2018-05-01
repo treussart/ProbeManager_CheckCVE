@@ -2,11 +2,9 @@ import logging
 
 from django.contrib import admin
 from django.contrib import messages
-from django_celery_beat.models import PeriodicTask
 
 from checkcve.forms import CheckCVEForm, CheckCVEChangeForm
 from checkcve.models import Checkcve, Software, WhiteList, Cve
-from checkcve.utils import create_check_cve_task
 
 logger = logging.getLogger(__name__)
 
@@ -28,10 +26,6 @@ class CheckCVEAdmin(admin.ModelAdmin):
             messages.add_message(request, messages.SUCCESS, "Check CVE OK")
         else:  # pragma: no cover
             messages.add_message(request, messages.ERROR, "Check CVE failed ! " + str(errors))
-
-    def save_model(self, request, obj, form, change):
-        create_check_cve_task(obj)
-        super().save_model(request, obj, form, change)
 
     def get_form(self, request, obj=None, **kwargs):
         """A ModelAdmin that uses a different form class when adding an object."""
