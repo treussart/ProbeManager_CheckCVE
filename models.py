@@ -104,6 +104,10 @@ class Checkcve(Probe):
     def __str__(self):
         return str(self.name) + "  " + str(self.description)
 
+    def save(self, **kwargs):
+        super().save(**kwargs)
+        create_check_cve_task(self)
+
     def delete(self, **kwargs):
         try:
             periodic_task = PeriodicTask.objects.get(
@@ -113,10 +117,6 @@ class Checkcve(Probe):
         except PeriodicTask.DoesNotExist:  # pragma: no cover
             pass
         return super().delete(**kwargs)
-
-    def save(self, **kwargs):
-        super().save(**kwargs)
-        create_check_cve_task(self)
 
     def check_cve(self):
         cpe_list = list()

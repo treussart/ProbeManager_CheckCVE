@@ -11,29 +11,12 @@ from checkcve.models import Cve, Checkcve, WhiteList, Software
 logger = logging.getLogger(__name__)
 
 
-class CheckcveViewSet(mixins.ListModelMixin, mixins.CreateModelMixin, mixins.RetrieveModelMixin,
-                      mixins.DestroyModelMixin, viewsets.GenericViewSet):
+class CheckcveViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows groups to be viewed or edited.
     """
     queryset = Checkcve.objects.all()
     serializer_class = serializers.CheckcveSerializer
-
-    def update(self, request, pk=None):
-        checkcve = self.get_object()
-        serializer = serializers.CheckcveUpdateSerializer(checkcve, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    def partial_update(self, request, pk=None):
-        checkcve = self.get_object()
-        serializer = serializers.CheckcveUpdateSerializer(checkcve, data=request.data, partial=True)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class CveViewSet(viewsets.ModelViewSet):
