@@ -6,6 +6,7 @@ from django.contrib.postgres.fields import ArrayField
 from django.db import models
 from django.db.models import Q
 from django.utils import timezone
+from django_celery_beat.models import PeriodicTask
 
 from checkcve.modelsmixins import NameMixin
 from checkcve.utils import convert_to_cpe, CVESearch
@@ -102,6 +103,16 @@ class Checkcve(Probe):
 
     def __str__(self):
         return self.name + "  " + self.description
+
+    def delete(self, **kwargs):
+        try:
+            periodic_task = PeriodicTask.objects.get(
+                name=self.name + "_check_cve")
+            periodic_task.delete()
+            logger.debug(str(periodic_task) + " deleted")
+        except PeriodicTask.DoesNotExist:  # pragma: no cover
+            pass
+        return super().delete(**kwargs)
 
     def check_cve(self):
         cpe_list = list()

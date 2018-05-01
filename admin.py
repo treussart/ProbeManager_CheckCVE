@@ -40,27 +40,7 @@ class CheckCVEAdmin(admin.ModelAdmin):
         else:
             return CheckCVEChangeForm
 
-    def delete(self, request, obj, probe=None):
-        if probe is None:
-            probe = obj
-        try:
-            periodic_task = PeriodicTask.objects.get(
-                name=probe.name + "_check_cve")
-            periodic_task.delete()
-            logger.debug(str(periodic_task) + " deleted")
-        except PeriodicTask.DoesNotExist:  # pragma: no cover
-            pass
-        messages.add_message(request, messages.SUCCESS, "CheckCve instance " + probe.name + " deleted")
-        super().delete_model(request, obj)
-
-    def delete_model(self, request, obj):
-        self.delete(request, obj)
-
-    def delete_selected(self, request, obj):
-        for probe in obj:
-            self.delete(request, obj, probe=probe)
-
-    actions = [check_cve, delete_selected]
+    actions = [check_cve]
 
 
 admin.site.register(Checkcve, CheckCVEAdmin)

@@ -13,7 +13,8 @@ from checkcve.utils import create_check_cve_task
 logger = logging.getLogger(__name__)
 
 
-class CheckcveViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
+class CheckcveViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, mixins.DestroyModelMixin,
+                      viewsets.GenericViewSet):
     """
     API endpoint that allows groups to be viewed or edited.
     """
@@ -45,18 +46,6 @@ class CheckcveViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    def destroy(self, request, pk=None):
-        checkcve = self.get_object()
-        try:
-            periodic_task = PeriodicTask.objects.get(
-                name=checkcve.name + "_check_cve")
-            periodic_task.delete()
-            logger.debug(str(periodic_task) + " deleted")
-        except PeriodicTask.DoesNotExist:  # pragma: no cover
-            pass
-        checkcve.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class CveViewSet(viewsets.ModelViewSet):
