@@ -6,9 +6,10 @@ from django.contrib.postgres.fields import ArrayField
 from django.db import models
 from django.db.models import Q
 from django.utils import timezone
+from django_celery_beat.models import PeriodicTask
 
 from checkcve.modelsmixins import NameMixin
-from checkcve.utils import convert_to_cpe, CVESearch
+from checkcve.utils import convert_to_cpe, CVESearch, create_check_cve_task
 from core.models import Probe, OsSupported
 from core.modelsmixins import CommonMixin
 from core.notifications import send_notification
@@ -67,7 +68,7 @@ class Software(CommonMixin, models.Model):
         unique_together = ('name', 'os', 'instaled_by')
 
     def __str__(self):
-        return self.name + " - " + self.os.name + " - " + self.instaled_by
+        return str(self.name) + " - " + str(self.os.name) + " - " + str(self.instaled_by)
 
     def get_version(self, probe):
         software_by_os = Software.objects.get(name=self.name, os=probe.server.os)
@@ -101,7 +102,21 @@ class Checkcve(Probe):
         self.type = self.__class__.__name__
 
     def __str__(self):
-        return self.name + "  " + self.description
+        return str(self.name) + "  " + str(self.description)
+
+    def save(self, **kwargs):
+        super().save(**kwargs)
+        create_check_cve_task(self)
+
+    def delete(self, **kwargs):
+        try:
+            periodic_task = PeriodicTask.objects.get(
+                name=self.name + "_check_cve")
+            periodic_task.delete()
+            logger.debug(str(periodic_task) + " deleted")
+        except PeriodicTask.DoesNotExist:  # pragma: no cover
+            pass
+        return super().delete(**kwargs)
 
     def check_cve(self):
         cpe_list = list()

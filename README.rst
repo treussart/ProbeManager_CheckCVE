@@ -21,13 +21,13 @@ CheckCVE for Probe Manager
 Presentation
 ============
 
-Module for check the CVE of softwares
+Module to check the CVE of softwares
 
 
 Features
 --------
 
-* Check if exist a CVE for a software on a remote server.
+* Check if there is a CVE for a software on a remote server.
 
 Installation
 ============
@@ -66,7 +66,7 @@ Page to add a software for which a check of CVE can be made :
 
 * Give the name of the software as seen by the OS. example: dovecot-imapd is the name of Dovecot on Debian.
 * Specify for which operating systems the software is installed.
-* Give his valid `CPE <https://nvd.nist.gov/products/cpe>`_ name.
+* Give its valid `CPE <https://nvd.nist.gov/products/cpe>`_ name.
 * Specify how it was installed, by which package manager.
 
 Page of an instance :
@@ -76,15 +76,15 @@ Page of an instance :
   :align: center
   :width: 80%
 
-* The button 'Check CVE' launch a CVE audit, check if there are known vulnerabilities on this instance.
-* Under CVE found: There are link for CVE found, for debian it redirect to the security bug tracker and if not on www.cvedetails.com
+* The button 'Check CVE': launch a CVE audit, check if there are known vulnerabilities on this instance.
+* Under CVE found: There are links for CVE found. For Debian, it redirects to the security bug tracker. For others, it redirects to www.cvedetails.com.
 
 Miscellaneous
 -------------
 
 CVEs are registered with their `CVE ID <https://cve.mitre.org/about/faqs.html#what_is_cve_id>`_, example : CVE-2016-6304
 
-To know if it is necessary to put a CVE in white list, it is necessary to make sure that the patch is applied well to its version.
-There are sites to help to know as for example for Debian : `Security Bug Tracker <https://security-tracker.debian.org/tracker/>`_
+Before putting a CVE in a whitelist, it is necessary to make sure that the patch is well applied to its version.
+There are sites that help you know this,for example for Debian : `Security Bug Tracker <https://security-tracker.debian.org/tracker/>`_
 
-On the home page, if the instance icon is red, there are known vulnerabilities on this instance, and none if it is green.
+On the home page, if the instance icon is red, there are known vulnerabilities on this instance. If the icon is green, there are none.

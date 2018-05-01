@@ -42,6 +42,7 @@ class APITest(APITestCase):
 
         response = self.client.post('/api/v1/checkcve/checkcve/', data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertTrue(PeriodicTask.objects.get(name="test_check_cve"))
 
         response = self.client.post('/api/v1/checkcve/checkcve/', {'name': 'test'})
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
