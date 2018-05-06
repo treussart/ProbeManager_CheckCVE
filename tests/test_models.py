@@ -6,7 +6,7 @@ from core.models import Probe, Server, OsSupported
 
 
 class CveTest(TestCase):
-    fixtures = ['init', 'crontab', 'init-checkcve', 'test-core-server', 'test-checkcve']
+    fixtures = ['init', 'crontab', 'init-checkcve', 'test-core-secrets', 'test-checkcve']
 
     def test_cve(self):
         all_cve = Cve.get_all()
@@ -38,7 +38,7 @@ class SoftwareTest(TestCase):
 
 
 class WhitelistTest(TestCase):
-    fixtures = ['init', 'crontab', 'init-checkcve', 'test-core-server', 'test-checkcve']
+    fixtures = ['init', 'crontab', 'init-checkcve', 'test-core-secrets', 'test-checkcve']
 
     def test_whitelist(self):
         all_whitelist = WhiteList.get_all()

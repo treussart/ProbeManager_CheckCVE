@@ -4,6 +4,7 @@ from rest_framework import mixins
 from rest_framework import status
 from rest_framework import viewsets
 from rest_framework.response import Response
+from rest_framework.decorators import action
 
 from checkcve.api import serializers
 from checkcve.models import Cve, Checkcve, WhiteList, Software
@@ -34,6 +35,15 @@ class CheckcveViewSet(mixins.ListModelMixin, mixins.CreateModelMixin, mixins.Ret
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    @action(detail=True)
+    def check_cve(self, request, pk=None):
+        obj = self.get_object()
+        try:
+            response = obj.check_cve()
+        except Exception as e:
+            return Response({'status': False, 'errors': str(e)})
+        return Response({'status': True, 'message': str(response)})
 
 
 class CveViewSet(viewsets.ModelViewSet):

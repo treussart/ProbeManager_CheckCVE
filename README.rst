@@ -88,3 +88,5 @@ Before putting a CVE in a whitelist, it is necessary to make sure that the patch
 There are sites that help you know this,for example for Debian : `Security Bug Tracker <https://security-tracker.debian.org/tracker/>`_
 
 On the home page, if the instance icon is red, there are known vulnerabilities on this instance. If the icon is green, there are none.
+
+All operating systems that have an SSH server are theoretically compatible, in fact as currently only the APT and Brew package manager are supported, this limits to Debian, Ubuntu and OSX.
