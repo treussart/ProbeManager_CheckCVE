@@ -65,6 +65,9 @@ class APITest(APITestCase):
         response = self.client.put('/api/v1/checkcve/checkcve/' + str(Checkcve.get_by_name('test').id) + '/', {'name': 'test'})
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
+        response = self.client.patch('/api/v1/checkcve/checkcve/' + str(Checkcve.get_by_name('test').id) + '/', {'whitelist': 'reere'})
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
         response = self.client.patch('/api/v1/checkcve/checkcve/' + str(Checkcve.get_by_name('test').id) + '/', data_patch)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(Checkcve.get_by_name('test').softwares.all()), 2)
