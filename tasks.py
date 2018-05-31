@@ -1,4 +1,5 @@
 import importlib
+import reprlib
 
 from celery import task
 from celery.utils.log import get_task_logger
@@ -7,6 +8,9 @@ from core.models import Probe, Job
 from core.notifications import send_notification
 
 logger = get_task_logger(__name__)
+
+repr_instance = reprlib.Repr()
+repr_instance.maxstring = 200
 
 
 @task
@@ -23,7 +27,7 @@ def check_cve(probe_name):
         logger.info("task - check_cve : " + str(probe_name) + " - " + str(response))
     except Exception as e:  # pragma: no cover
         logger.exception(str(e))
-        job.update_job(str(e), 'Error')
+        job.update_job(repr_instance.repr(e), 'Error')
         send_notification("Error during Check CVE for " + str(probe.name), str(e))
         return {"message": "Error for probe " + str(probe.name) + " to check CVE", "exception": str(e)}
     return response

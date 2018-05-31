@@ -39,10 +39,7 @@ class CheckcveViewSet(mixins.ListModelMixin, mixins.CreateModelMixin, mixins.Ret
     @action(detail=True)
     def check_cve(self, request, pk=None):
         obj = self.get_object()
-        try:
-            response = obj.check_cve()
-        except Exception as e:
-            return Response({'status': False, 'errors': str(e)})
+        response = obj.check_cve()
         return Response({'status': True, 'message': str(response)})
 
 
