@@ -97,6 +97,10 @@ class Checkcve(Probe):
     vulnerabilities = ArrayField(models.CharField(max_length=100, blank=True), editable=False, blank=True, null=True,
                                  default=list())
 
+    class Meta:
+        verbose_name = 'Checkcve instance'
+        verbose_name_plural = 'Checkcve instances'
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.type = self.__class__.__name__
