@@ -90,3 +90,5 @@ There are sites that help you know this,for example for Debian : `Security Bug T
 On the home page, if the instance icon is red, there are known vulnerabilities on this instance. If the icon is green, there are none.
 
 All operating systems that have an SSH server are theoretically compatible, in fact as currently only the APT and Brew package manager are supported, this limits to Debian, Ubuntu and OSX.
+
+The knowledge base of CVE used is: https://cve.circl.lu
